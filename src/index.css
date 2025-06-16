@@ -1,8 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-body{
-  margin:auto;
-  position:relative;
-  max-width:1444px;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-gray-700)
+}
+
+body {
+  max-width: 1444px;
+  position: relative;
+  color: white; /* Optional: ensures text is readable */
 }

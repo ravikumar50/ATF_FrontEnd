@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import HomeLayout from '../Layouts/Homelayout';
 
 function Upload() {
     const [file, setFile] = useState(null);
@@ -49,23 +50,30 @@ function Upload() {
     };
 
     return (
-        <div className="text-white p-10">
-            <ToastContainer />
-            <h2 className="text-2xl font-bold mb-4">Upload a File</h2>
-            <div className="flex flex-col gap-1">
-                <label htmlFor="fileupload">Select Files</label>
-                <input
-                    id='fileupload'
-                    type="file"
-                    onChange={handleFileChange}
-                    placeholder='No file choosen'
-                    className="bg-transparent px-3 py-1 border rounded-md w-80"
-                />
+        <HomeLayout>
+            <div className="flex items-center justify-center h-[90vh]">
+                <form onSubmit={handleUpload} noValidate className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]">
+                    <h1 className="text-center text-2xl font-bold ">Upload File</h1>
+
+                    <div className="flex flex-col gap-1">
+                        <label htmlFor="fileupload" className="font-semibold">Select File</label>
+                        <input
+                            type="file"
+                            required
+                            name="fileupload"
+                            id="fileupload"
+                            onChange={handleFileChange}
+                            className="bg-transparent px-2 py-1 border rounded-md"
+                        />
+                    </div>
+
+                    <button type="submit" className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-lg cursor-pointer text-white">
+                        Upload File
+                    </button>
+                </form>
             </div>
-            <button onClick={handleUpload} className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600 mt-4">
-                Upload
-            </button>
-        </div>
+        </HomeLayout>
+        
     );
 }
 
