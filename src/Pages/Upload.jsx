@@ -75,6 +75,7 @@ function Upload() {
                 </div>
             </div>
         </HomeLayout>
+        <ToastContainer position="top-center" theme="dark" />
         
     );
 }
