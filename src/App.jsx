@@ -16,9 +16,9 @@ function App() {
       <Route
         path="/"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+          // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
             <HomePage />
-           </MsalAuthenticationTemplate>
+          // </MsalAuthenticationTemplate>
         }
       />
       <Route path="/logout" element={< Logout/>} />

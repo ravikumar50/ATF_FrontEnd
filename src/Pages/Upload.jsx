@@ -13,7 +13,9 @@ function Upload() {
         setFile(e.target.files[0]);
     };
 
-    const handleUpload = async () => {
+    const handleUpload = async (e) => {
+        e.preventDefault(); // <-- Prevent form from reloading the page
+
         if (!file) {
             toast.error("Please select a file first");
             return;
@@ -22,13 +24,11 @@ function Upload() {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Show loading toast
         const toastId = toast.loading("Uploading file...");
 
         try {
             await axios.post("https://functionapptry.azurewebsites.net/api/uploadBlob", formData);
 
-            // Update toast to success
             toast.update(toastId, {
                 render: "File uploaded successfully!",
                 type: "success",
@@ -38,8 +38,6 @@ function Upload() {
             });
         } catch (err) {
             console.error(err);
-
-            // Update toast to error
             toast.update(toastId, {
                 render: "Upload failed",
                 type: "error",
@@ -48,6 +46,7 @@ function Upload() {
             });
         }
     };
+
 
     return (
         <HomeLayout>
