@@ -21,15 +21,30 @@ function Upload() {
         const formData = new FormData();
         formData.append('file', file);
 
+        // Show loading toast
+        const toastId = toast.loading("Uploading file...");
+
         try {
             await axios.post("https://functionapptry.azurewebsites.net/api/uploadBlob", formData);
-            toast.success("File uploaded successfully!", {
-                onClose: () => navigate("/"),
-                autoClose: 2000, // 2 seconds
+
+            // Update toast to success
+            toast.update(toastId, {
+                render: "File uploaded successfully!",
+                type: "success",
+                isLoading: false,
+                autoClose: 2000,
+                onClose: () => navigate("/")
             });
         } catch (err) {
             console.error(err);
-            toast.error("Upload failed");
+
+            // Update toast to error
+            toast.update(toastId, {
+                render: "Upload failed",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000
+            });
         }
     };
 
