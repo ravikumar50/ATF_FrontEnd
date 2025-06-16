@@ -52,13 +52,16 @@ function Upload() {
         <div className="text-white p-10">
             <ToastContainer />
             <h2 className="text-2xl font-bold mb-4">Upload a File</h2>
-            <label htmlFor="fileupload">Select Files</label>
-            <input
-                id='fileupload'
-                type="file"
-                onChange={handleFileChange}
-                className="bg-transparent px-3 py-1 border rounded-md"
-            />
+            <div className="flex flex-col gap-1">
+                <label htmlFor="fileupload">Select Files</label>
+                <input
+                    id='fileupload'
+                    type="file"
+                    onChange={handleFileChange}
+                    className="bg-transparent px-3 py-1 border rounded-md"
+                />
+            </div>
+            
             <br />
             <button onClick={handleUpload} className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600 mt-4">
                 Upload
