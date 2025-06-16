@@ -43,16 +43,12 @@ function DownloadPage() {
             ) : (
               files.map(file => (
                 <li key={file.name} className="flex justify-between items-center bg-gray-800 px-4 py-2 rounded-md">
+                  <span className="truncate max-w-[60%]">{file.name}</span>
                   <a
                     href={file.url}
+                    download
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="truncate max-w-[60%] text-blue-300 hover:underline"
-                  >
-                    {file.name}
-                  </a>
-                  <a
-                    href={`https://functionapptry.azurewebsites.net/api/downloadBlob?file=${encodeURIComponent(file.name)}`}
                     className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
                   >
                     Download
@@ -66,7 +62,5 @@ function DownloadPage() {
     </HomeLayout>
   );
 }
-
-
 
 export default DownloadPage;
