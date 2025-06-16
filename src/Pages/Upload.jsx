@@ -52,6 +52,7 @@ function Upload() {
 
 
     return (
+        <>
         <HomeLayout>
             <div className="flex items-center justify-center h-[90vh]">
                 <div className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]">
@@ -76,6 +77,7 @@ function Upload() {
             </div>
         </HomeLayout>
         <ToastContainer position="top-center" theme="dark" />
+        </>
         
     );
 }
