@@ -52,10 +52,7 @@ function DownloadPage() {
                     {file.name}
                   </a>
                   <a
-                    href={file.url}
-                    download
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`https://functionapptry.azurewebsites.net/api/downloadBlob?file=${encodeURIComponent(file.name)}`}
                     className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
                   >
                     Download
@@ -69,5 +66,7 @@ function DownloadPage() {
     </HomeLayout>
   );
 }
+
+
 
 export default DownloadPage;
