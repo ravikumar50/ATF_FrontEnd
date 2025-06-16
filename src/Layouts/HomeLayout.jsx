@@ -15,7 +15,7 @@ function HomeLayout({children}){
     // const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn);
     
 
-    const isLoggedIn = useIsAuthenticated();
+    
 
 
     // for displaying the options
@@ -87,23 +87,15 @@ function HomeLayout({children}){
                         <li>
                             <Link to={"/about"}>About Us</Link>
                         </li>
-                        {isLoggedIn ? (
-                            <li className="absolute bottom-4 w-[90%]">
-                                <div className="w-full flex items-center justify-center">
-                                <button className="btn btn-secondary px-4 py-1 font-semibold rounded-md w-full text-center" onClick={() => navigate("/logout")}>
-                                    Login
-                                </button>
-                                </div>
-                            </li>
-                            ) : (
-                            <li className="absolute bottom-4 w-[90%]">
-                                <div className="w-full flex items-center justify-center">
-                                <button className="btn btn-secondary px-4 py-1 font-semibold rounded-md w-full text-center" onClick={() => navigate("/")}>
-                                    Logout 
-                                </button>
-                                </div>
-                            </li>
-                        )}
+                        
+                        <li className="absolute bottom-4 w-[90%]">
+                            <div className="w-full flex items-center justify-center">
+                            <button className="btn btn-secondary px-4 py-1 font-semibold rounded-md w-full text-center" onClick={() => navigate("/")}>
+                                Logout 
+                            </button>
+                            </div>
+                        </li>
+                        
                     </ul>
                 </div>
             
