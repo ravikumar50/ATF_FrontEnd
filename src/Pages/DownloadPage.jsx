@@ -43,7 +43,14 @@ function DownloadPage() {
             ) : (
               files.map(file => (
                 <li key={file.name} className="flex justify-between items-center bg-gray-800 px-4 py-2 rounded-md">
-                  <span className="truncate max-w-[60%]">{file.name}</span>
+                  <a
+                    href={file.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="truncate max-w-[60%] text-blue-300 hover:underline"
+                  >
+                    {file.name}
+                  </a>
                   <a
                     href={file.url}
                     download
