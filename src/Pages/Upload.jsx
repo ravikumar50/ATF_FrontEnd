@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 function Upload() {
     const [file, setFile] = useState(null);
-    const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -11,7 +14,7 @@ function Upload() {
 
     const handleUpload = async () => {
         if (!file) {
-            setMessage("Please select a file first");
+            toast.error("Please select a file first");
             return;
         }
 
@@ -19,23 +22,32 @@ function Upload() {
         formData.append('file', file);
 
         try {
-            const res = await axios.post("https://functionapptry.azurewebsites.net/api/uploadBlob", formData);
-            setMessage("Upload successful! File URL: " + res.data.url);
+            await axios.post("https://functionapptry.azurewebsites.net/api/uploadBlob", formData);
+            toast.success("File uploaded successfully!", {
+                onClose: () => navigate("/"),
+                autoClose: 2000, // 2 seconds
+            });
         } catch (err) {
             console.error(err);
-            setMessage("Upload failed");
+            toast.error("Upload failed");
         }
     };
 
     return (
         <div className="text-white p-10">
+            <ToastContainer />
             <h2 className="text-2xl font-bold mb-4">Upload a File</h2>
-            <input type="file" onChange={handleFileChange} className="mb-4" />
+            <label htmlFor="fileupload">Select Files</label>
+            <input
+                id='fileupload'
+                type="file"
+                onChange={handleFileChange}
+                className="bg-transparent px-3 py-1 border rounded-md"
+            />
             <br />
-            <button onClick={handleUpload} className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600">
+            <button onClick={handleUpload} className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600 mt-4">
                 Upload
             </button>
-            <p className="mt-4">{message}</p>
         </div>
     );
 }
