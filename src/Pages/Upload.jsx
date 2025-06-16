@@ -58,11 +58,10 @@ function Upload() {
                     id='fileupload'
                     type="file"
                     onChange={handleFileChange}
-                    className="bg-transparent px-3 py-1 border rounded-md"
+                    placeholder='No file choosen'
+                    className="bg-transparent px-3 py-1 border rounded-md w-80"
                 />
             </div>
-            
-            <br />
             <button onClick={handleUpload} className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600 mt-4">
                 Upload
             </button>
