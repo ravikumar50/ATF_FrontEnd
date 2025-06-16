@@ -25,7 +25,7 @@ function DownloadPage() {
   return (
     <HomeLayout>
       <div className="flex items-center justify-center h-[90vh]">
-        <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+        <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl shadow-2xl bg-gray-600">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-2xl font-bold">Available Files</h2>
             <button
