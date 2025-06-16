@@ -10,7 +10,7 @@ function HomePage(){
                     <h1 className="text-4xl font-semibold">
                         Find out best the place to <br></br>
                         <span className="text-yellow-500 font-bold"> 
-                            Upload and Download ATF Files from here
+                            Upload and Download ATF Files
                         </span>
                     </h1>
 
