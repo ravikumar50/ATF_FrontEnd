@@ -21,13 +21,13 @@ const msalConfig = {
 const msalInstance = new PublicClientApplication(msalConfig);
 
 createRoot(document.getElementById('root')).render(
-  // <MsalProvider instance={msalInstance}>
+   <MsalProvider instance={msalInstance}>
     <Provider store={store}>
       <BrowserRouter>
         <App />
         <Toaster></Toaster>
       </BrowserRouter>
     </Provider>
-  // </MsalProvider>
+   </MsalProvider>
   
 )
