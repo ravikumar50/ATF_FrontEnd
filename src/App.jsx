@@ -8,6 +8,7 @@ import { InteractionType } from "@azure/msal-browser";
 import DownloadPage from './Pages/DownloadPage';
 import Contact from './Pages/Contact';
 import Logout from './Pages/Logout';
+import Upload from './Pages/Upload';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/logout" element={< Logout/>} />
       <Route path="/download" element={<DownloadPage />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/upload" element={<Upload/>} />
     </Routes>
   );
 }
