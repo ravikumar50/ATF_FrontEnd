@@ -12,6 +12,9 @@
   "dependencies": {
     "@azure/msal-browser": "^4.13.0",
     "@azure/msal-react": "^3.0.12",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.1",
+    "@mui/x-charts": "^8.5.2",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/vite": "^4.1.8",
