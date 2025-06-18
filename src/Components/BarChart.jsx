@@ -30,7 +30,7 @@ function BarChart({passed,failed,skipped}){
             />
         </div>
 
-        <div className="flex items-center justify-center gap-5">
+        <div className="flex items-center justify-center gap-3">
             <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
                 <div className="flex flex-col">
                     <p className="font-semibold">Passed</p>
@@ -50,7 +50,7 @@ function BarChart({passed,failed,skipped}){
             </div>
             <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
                 <div className="flex flex-col">
-                    <p className="font-semibold">skipped</p>
+                    <p className="font-semibold">Skipped</p>
                     <h3 className="text-4xl font-bold">{skipped}</h3>
                 </div>
 
