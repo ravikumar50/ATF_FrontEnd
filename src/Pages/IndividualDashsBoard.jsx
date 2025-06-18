@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function IndividualDashBoard() {
+  
+  
   const location = useLocation();
   const SampleFile = location.state?.sampleFile;
 

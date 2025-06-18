@@ -2,26 +2,43 @@ import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SampleFile from "../assets/Files/Sample1.xml?raw";
+
+import { useNavigate } from "react-router-dom";
 
 function DownloadPage() {
+  // const [files, setFiles] = useState([]);
+  // const [loading, setLoading] = useState(false);
+
+  // const fetchFiles = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlobs');
+  //     const data = await res.json();
+  //     setFiles(data);
+  //   } catch (err) {
+  //     console.error("Error fetching files:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchFiles();
+  // }, []);
+
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const fetchFiles = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlobs');
-      const data = await res.json();
-      setFiles(data);
-    } catch (err) {
-      console.error("Error fetching files:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchFiles();
+    // Local testing: Use hardcoded XML file
+    setFiles([
+      {
+        name: "Sample1.xml",
+        url: SampleFile,
+      },
+    ]);
   }, []);
 
   return (
@@ -31,7 +48,7 @@ function DownloadPage() {
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-2xl font-bold">Available Files</h2>
             <button
-              onClick={fetchFiles}
+            //  onClick={fetchFiles}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm"
               disabled={loading}
             >
@@ -45,38 +62,36 @@ function DownloadPage() {
             ) : (
               files.map(file => (
                 <li key={file.name} className="flex justify-between items-center bg-gray-800 px-4 py-2 rounded-md">
-                  <span className="truncate max-w-[60%]">{file.name}</span>
-                  <a
-                    href={file.url}
-                    download
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
-                  >
-                    Download
-                  </a>
-                  <button
-                    onClick={async () => {
-                      try {
-                        const res = await fetch(file.url);
-                        const text = await res.text(); // get raw XML content
-                        navigate("/individualDashboard", { state: { sampleFile: text } });
-                      } catch (err) {
-                        toast.error("Failed to load file. Redirecting to home page...", {
-                          position: "top-right",
-                          autoClose: 2000,
-                        });
-
-                        // Wait for 3 seconds before redirecting
-                        setTimeout(() => {
-                          navigate("/");
-                        }, 2000);
-                      }
-                    }}
-                    className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
-                  >
-                    DashBoard
-                  </button>
+                  
+                  <div className="w-1/2">
+                    <span className="truncate">{file.name}</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <a
+                      href={file.url}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                    >
+                      Download
+                    </a>
+                    <button
+                      onClick={async () => {
+                        try {
+                          navigate("/individualDashboard", { state: { sampleFile: file.url } });
+                        } catch (err) {
+                          toast.error("Failed to load file.", {
+                            position: "top-right",
+                            autoClose: 2000,
+                          });
+                        }
+                      }}
+                      className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                    >
+                      DashBoard
+                    </button>
+                  </div>
                 </li>
               ))
             )}
