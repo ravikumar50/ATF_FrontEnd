@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function DownloadPage() {
   const [files, setFiles] = useState([]);
@@ -53,6 +55,28 @@ function DownloadPage() {
                   >
                     Download
                   </a>
+                  <button
+                    onClick={async () => {
+                      try {
+                        const res = await fetch(file.url);
+                        const text = await res.text(); // get raw XML content
+                        navigate("/individualDashboard", { state: { sampleFile: text } });
+                      } catch (err) {
+                        toast.error("Failed to load file. Redirecting to home page...", {
+                          position: "top-right",
+                          autoClose: 2000,
+                        });
+
+                        // Wait for 3 seconds before redirecting
+                        setTimeout(() => {
+                          navigate("/");
+                        }, 2000);
+                      }
+                    }}
+                    className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                  >
+                    DashBoard
+                  </button>
                 </li>
               ))
             )}
