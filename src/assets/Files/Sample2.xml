@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="a1" name="DemoRun1" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default" id="00000000-0000-0000-0000-000000000001" />
+  <Times creation="2025-06-18T12:10:00Z" start="2025-06-18T12:10:01Z" finish="2025-06-18T12:10:05Z" />
+  <ResultSummary outcome="Completed">
+    <Counters total="5" executed="4" passed="3" failed="1" notExecuted="1" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TestA" id="t1"><Execution id="e1" /><TestMethod name="TestA" className="Demo.Tests" codeBase="demo.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestB" id="t2"><Execution id="e2" /><TestMethod name="TestB" className="Demo.Tests" codeBase="demo.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestC" id="t3"><Execution id="e3" /><TestMethod name="TestC" className="Demo.Tests" codeBase="demo.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestD" id="t4"><Execution id="e4" /><TestMethod name="TestD" className="Demo.Tests" codeBase="demo.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestE" id="t5"><Execution id="e5" /><TestMethod name="TestE" className="Demo.Tests" codeBase="demo.dll" adapterTypeName="Executor" /></UnitTest>
+  </TestDefinitions>
+  <Results>
+    <UnitTestResult executionId="e1" testId="t1" testName="TestA" outcome="Passed" />
+    <UnitTestResult executionId="e2" testId="t2" testName="TestB" outcome="Passed" />
+    <UnitTestResult executionId="e3" testId="t3" testName="TestC" outcome="Failed">
+      <Output><ErrorInfo><Message>Assertion failed</Message><StackTrace>at Demo.Tests.TestC()</StackTrace></ErrorInfo></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e4" testId="t4" testName="TestD" outcome="Passed" />
+    <UnitTestResult executionId="e5" testId="t5" testName="TestE" outcome="NotExecuted" />
+  </Results>
+</TestRun>

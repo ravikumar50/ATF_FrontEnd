@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="a4" name="DemoRun4" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="0" passed="0" failed="0" notExecuted="3" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Feature1Test" id="t1"><Execution id="e1" /><TestMethod name="Feature1Test" className="Skip.Tests" codeBase="skip.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="Feature2Test" id="t2"><Execution id="e2" /><TestMethod name="Feature2Test" className="Skip.Tests" codeBase="skip.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="Feature3Test" id="t3"><Execution id="e3" /><TestMethod name="Feature3Test" className="Skip.Tests" codeBase="skip.dll" adapterTypeName="Executor" /></UnitTest>
+  </TestDefinitions>
+  <Results>
+    <UnitTestResult executionId="e1" testId="t1" testName="Feature1Test" outcome="NotExecuted" />
+    <UnitTestResult executionId="e2" testId="t2" testName="Feature2Test" outcome="NotExecuted" />
+    <UnitTestResult executionId="e3" testId="t3" testName="Feature3Test" outcome="NotExecuted" />
+  </Results>
+</TestRun>

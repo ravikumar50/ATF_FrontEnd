@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="a5" name="DemoRun5" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <ResultSummary outcome="Completed">
+    <Counters total="10" executed="8" passed="4" failed="4" notExecuted="2" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="T1" id="t1"><Execution id="e1" /><TestMethod name="T1" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T2" id="t2"><Execution id="e2" /><TestMethod name="T2" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T3" id="t3"><Execution id="e3" /><TestMethod name="T3" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T4" id="t4"><Execution id="e4" /><TestMethod name="T4" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T5" id="t5"><Execution id="e5" /><TestMethod name="T5" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T6" id="t6"><Execution id="e6" /><TestMethod name="T6" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T7" id="t7"><Execution id="e7" /><TestMethod name="T7" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T8" id="t8"><Execution id="e8" /><TestMethod name="T8" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T9" id="t9"><Execution id="e9" /><TestMethod name="T9" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="T10" id="t10"><Execution id="e10" /><TestMethod name="T10" className="Tests" codeBase="test.dll" adapterTypeName="Executor" /></UnitTest>
+  </TestDefinitions>
+  <Results>
+    <UnitTestResult executionId="e1" testId="t1" testName="T1" outcome="Passed" />
+    <UnitTestResult executionId="e2" testId="t2" testName="T2" outcome="Passed" />
+    <UnitTestResult executionId="e3" testId="t3" testName="T3" outcome="Failed" />
+    <UnitTestResult executionId="e4" testId="t4" testName="T4" outcome="Failed" />
+    <UnitTestResult executionId="e5" testId="t5" testName="T5" outcome="Passed" />
+    <UnitTestResult executionId="e6" testId="t6" testName="T6" outcome="Failed" />
+    <UnitTestResult executionId="e7" testId="t7" testName="T7" outcome="Passed" />
+    <UnitTestResult executionId="e8" testId="t8" testName="T8" outcome="Failed" />
+    <UnitTestResult executionId="e9" testId="t9" testName="T9" outcome="NotExecuted" />
+    <UnitTestResult executionId="e10" testId="t10" testName="T10" outcome="NotExecuted" />
+  </Results>
+</TestRun>

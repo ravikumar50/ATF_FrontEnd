@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="a3" name="DemoRun3" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="0" failed="3" notExecuted="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TestX" id="t1"><Execution id="e1" /><TestMethod name="TestX" className="Fail.Tests" codeBase="fail.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestY" id="t2"><Execution id="e2" /><TestMethod name="TestY" className="Fail.Tests" codeBase="fail.dll" adapterTypeName="Executor" /></UnitTest>
+    <UnitTest name="TestZ" id="t3"><Execution id="e3" /><TestMethod name="TestZ" className="Fail.Tests" codeBase="fail.dll" adapterTypeName="Executor" /></UnitTest>
+  </TestDefinitions>
+  <Results>
+    <UnitTestResult executionId="e1" testId="t1" testName="TestX" outcome="Failed">
+      <Output><ErrorInfo><Message>Error A</Message><StackTrace>at Fail.Tests.TestX()</StackTrace></ErrorInfo></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e2" testId="t2" testName="TestY" outcome="Failed">
+      <Output><ErrorInfo><Message>Error B</Message><StackTrace>at Fail.Tests.TestY()</StackTrace></ErrorInfo></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e3" testId="t3" testName="TestZ" outcome="Failed">
+      <Output><ErrorInfo><Message>Error C</Message><StackTrace>at Fail.Tests.TestZ()</StackTrace></ErrorInfo></Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
