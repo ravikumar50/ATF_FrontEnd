@@ -2,44 +2,31 @@ import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SampleFile from "../assets/Files/Sample1.xml?raw";
 
 import { useNavigate } from "react-router-dom";
 
 function DownloadPage() {
-  // const [files, setFiles] = useState([]);
-  // const [loading, setLoading] = useState(false);
-
-  // const fetchFiles = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlobs');
-  //     const data = await res.json();
-  //     setFiles(data);
-  //   } catch (err) {
-  //     console.error("Error fetching files:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchFiles();
-  // }, []);
-
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const fetchFiles = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlobs');
+      const data = await res.json();
+      setFiles(data);
+    } catch (err) {
+      console.error("Error fetching files:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Local testing: Use hardcoded XML file
-    setFiles([
-      {
-        name: "Sample1.xml",
-        url: SampleFile,
-      },
-    ]);
+    fetchFiles();
   }, []);
+
+  
 
   return (
     <HomeLayout>
@@ -48,7 +35,7 @@ function DownloadPage() {
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-2xl font-bold">Available Files</h2>
             <button
-            //  onClick={fetchFiles}
+              onClick={fetchFiles}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm"
               disabled={loading}
             >
@@ -79,7 +66,10 @@ function DownloadPage() {
                     <button
                       onClick={async () => {
                         try {
-                          navigate("/individualDashboard", { state: { sampleFile: file.url } });
+                          const response = await fetch(file.url);
+                          const text = await response.text(); // Get raw XML content
+
+                          navigate("/individualDashboard", { state: { sampleFile: text } });
                         } catch (err) {
                           toast.error("Failed to load file.", {
                             position: "top-right",
@@ -91,6 +81,7 @@ function DownloadPage() {
                     >
                       DashBoard
                     </button>
+
                   </div>
                 </li>
               ))
