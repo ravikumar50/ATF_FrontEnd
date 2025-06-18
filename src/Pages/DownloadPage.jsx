@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function DownloadPage() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const fetchFiles = async () => {
     setLoading(true);
     try {
