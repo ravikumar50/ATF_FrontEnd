@@ -12,7 +12,7 @@ function DownloadPage() {
   const fetchFiles = async () => {
     setLoading(true);
     try {
-      const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlobs');
+      const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlob');
       const data = await res.json();
       setFiles(data);
     } catch (err) {
