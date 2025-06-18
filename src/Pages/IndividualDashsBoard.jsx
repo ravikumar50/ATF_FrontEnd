@@ -1,26 +1,22 @@
+import { useDispatch, useSelector } from "react-redux";
+import {Chart as ChartJs, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title} from "chart.js"
+import { data, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { PieChart } from '@mui/x-charts';
+import { __DO_NOT_USE__ActionTypes } from "@reduxjs/toolkit";
+import {Pie, Bar} from "react-chartjs-2"
+import HomeLayout from "../Layouts/Homelayout";
+import { SiTicktick } from "react-icons/si";
+import { ImCross } from "react-icons/im";
+import { BiSolidSkipNextCircle } from "react-icons/bi";
+import PieChart from "../Components/PieChart";
+import BarChart from "../Components/BarChart";
 
-const whiteLegendTheme = createTheme({
-  components: {
-    MuiChartsLegend: {
-      styleOverrides: {
-        root: {
-          // This targets the overall legend container
-          color: "#fff",
-          // Now target the individual labels inside it
-          "& .MuiChartsLegend-label": {
-            color: "#fff",         // white text
-            fontSize: "16px",      // larger font size
-            fontWeight: "bold",    // bold weight
-          },
-        },
-      },
-    },
-  },
-});
+
+
+ChartJs.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
+
+
+
 
 function IndividualDashBoard() {
     
@@ -29,6 +25,10 @@ function IndividualDashBoard() {
   const [passed, setPassed] = useState(0);
   const [failed, setFailed] = useState(0);  
   const [skipped, setSkipped] = useState(0);
+
+  const [chartName, setChartName] = useState("Bar");
+
+
   useEffect(() => {
     if (!sampleFile) {
       console.log("No SampleFile data provided");
@@ -51,10 +51,6 @@ function IndividualDashBoard() {
       console.log("Counters tag not found");
       return;
     }
-
-    // const passed = counters.getAttribute("passed");
-    // const failed = counters.getAttribute("failed");
-    // const skipped = counters.getAttribute("notExecuted");
     setPassed(counters.getAttribute("passed"));
     setFailed(counters.getAttribute("failed"));
     setSkipped(counters.getAttribute("notExecuted"));
@@ -62,48 +58,65 @@ function IndividualDashBoard() {
     
   }, [sampleFile]);
 
+  const dataDetails = [passed,failed,skipped];
+
+  
+  
+  const dashBoardPieData = {
+    labels : ["Passed", "Failed", "Skipped"],
+    datasets : [
+        {
+            label : "Details",
+            data : dataDetails,
+            backgroundColor : ["green", "red", "yellow"],
+            borderWidth : 1,
+            borderColor : ["green", "red", "yellow"],
+            
+        }
+    ]
+  }
+
+  const dashBoardBarData = {
+    labels : ["Passed", "Failed", "Skipped"],
+    datasets : [
+        {
+            label : "Details",
+            data : dataDetails,
+            backgroundColor : ["green", "red", "yellow"],
+            borderColor : ["white"],
+            borderWidth : 2
+        }
+    ]
+  }
+
+  function handleChartNameChange(){
+    setChartName(chartName=="Bar" ? "Pie" : "Bar");
+  }
+
+
   return (
-  <ThemeProvider theme={whiteLegendTheme}>
-      <div className="flex justify-center items-center h-screen bg-gray-900">
-        <div className="p-6 bg-gray-800 rounded-xl shadow-lg text-white">
-          <h2 className="text-2xl font-bold mb-4 text-center">
-            Test Result Summary
-          </h2>
-          <PieChart
-            series={[
+    <HomeLayout>
+      <div className="pt-5 flex flex-col items-center gap-3 text-white px-4 pb-20">
+        <h1 className="text-center text-3xl font-semibold text-yellow-500">
+            Dashboard
+        </h1>
+
+        <div className="flex flex-col gap-5 m-auto mx-10">
+          <div className="flex justify-center items-center w-full">
+            <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-700 rounded-md w-120 max-w-3xl">
               {
-                data: [
-                  { id: 0, value: passed, label: "Passed" },
-                  { id: 1, value: skipped, label: "Skipped" },
-                  { id: 2, value: failed, label: "Failed" },
-                ],
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: { additionalRadius: -10, color: "gray" },
-                cornerRadius: 4,
-                // slice‐center labels (you already have these white)
-                labelComponent: ({ label, value, x, y }) => (
-                  <text
-                    x={x}
-                    y={y}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fill="#fff"
-                    fontSize="12px"
-                    fontWeight="600"
-                  >
-                    {label} ({value})
-                  </text>
-                ),
-              },
-            ]}
-            width={400}
-            height={400}
-            // move legend inside or to bottom if you prefer
-            legend={{ position: "right" }}
-          />
+                chartName=="Pie" ? <PieChart passed={passed} failed={failed} skipped={skipped} /> : 
+                  <BarChart passed={passed} failed={failed} skipped={skipped} />                 
+              }
+              
+            </div>
+          </div>
         </div>
+        <button onClick={handleChartNameChange} className="bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-md cursor-pointer text-white px-3 py-1">
+          Click here to see {chartName=="Pie" ? "Bar" : "Pie"} chart
+        </button>
       </div>
-    </ThemeProvider>
+    </HomeLayout>
   );
 }
 

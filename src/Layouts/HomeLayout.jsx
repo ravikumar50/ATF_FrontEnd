@@ -44,7 +44,7 @@ function HomeLayout({children}){
 
 
     return(
-        <div className="min-h-[90vh]">
+        <div className="min-h-screen overflow-auto">
             <div className="drawer absolute left-0 z-50 w-fit">
                 <input className="drawer-toggle" type="checkbox" id="my-drawer"/>
                 <div className="drawer-content">
