@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { PieChart } from '@mui/x-charts';
@@ -7,7 +7,9 @@ function IndividualDashBoard() {
     
   const location = useLocation();
   const { sampleFile } = location.state || { sampleFile: '' };
-
+  const [passed, setPassed] = useState(0);
+  const [failed, setFailed] = useState(0);  
+  const [skipped, setSkipped] = useState(0);
   useEffect(() => {
     if (!sampleFile) {
       console.log("No SampleFile data provided");
@@ -31,9 +33,12 @@ function IndividualDashBoard() {
       return;
     }
 
-    const passed = counters.getAttribute("passed");
-    const failed = counters.getAttribute("failed");
-    const skipped = counters.getAttribute("notExecuted");
+    // const passed = counters.getAttribute("passed");
+    // const failed = counters.getAttribute("failed");
+    // const skipped = counters.getAttribute("notExecuted");
+    setPassed(counters.getAttribute("passed"));
+    setFailed(counters.getAttribute("failed"));
+    setSkipped(counters.getAttribute("notExecuted"));
 
     console.log("✅ Passed:", passed);
     console.log("❌ Failed:", failed);
