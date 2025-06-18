@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+import { PieChart } from '@mui/x-charts';
+
 function IndividualDashBoard() {
   const location = useLocation();
   const { sampleFile } = location.state || { sampleFile: '' };
@@ -37,7 +39,21 @@ function IndividualDashBoard() {
     console.log("⏭️ Skipped:", skipped);
   }, [sampleFile]);
 
-  return <div>Check console for test results</div>;
+  return <div>
+  <PieChart
+  series={[
+    {
+      data: [
+        { id: 0, value: passed , label: 'Passed' },
+        { id: 1, value: failed, label: 'Failed' },
+        { id: 2, value: skipped, label: 'Skipped' },
+      ],
+    },
+  ]}
+  width={200}
+  height={200}
+/>
+</div>;
 }
 
 export default IndividualDashBoard;
