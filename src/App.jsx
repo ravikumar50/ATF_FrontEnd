@@ -11,6 +11,7 @@ import Logout from './Pages/Logout';
 import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import Sample1 from './assets/Files/Sample1.xml?raw';
+import OverallDashboard from './Pages/OverallDashboard';
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
       <Route path="/download" element={<DownloadPage />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/upload" element={<Upload/>} />
-      <Route path='/individualDashboard' element={<IndividualDashBoard SampleFile={Sample1}/>}/>
+      <Route path="/individualDashBoard" element={<IndividualDashBoard/>} />
+      <Route path='/overAllDashboard' element={<OverallDashboard/>}/>
     </Routes>
   );
 }

@@ -27,7 +27,7 @@ function IndividualDashBoard() {
   const [failed, setFailed] = useState(0);  
   const [skipped, setSkipped] = useState(0);
 
-  const [chartName, setChartName] = useState("Bar");
+  const [chartName, setChartName] = useState("Pie");
 
 
   useEffect(() => {
@@ -47,36 +47,6 @@ function IndividualDashBoard() {
     
   }, [sampleFile]);
 
-  const dataDetails = [passed,failed,skipped];
-
-  
-  
-  const dashBoardPieData = {
-    labels : ["Passed", "Failed", "Skipped"],
-    datasets : [
-        {
-            label : "Details",
-            data : dataDetails,
-            backgroundColor : ["green", "red", "yellow"],
-            borderWidth : 1,
-            borderColor : ["green", "red", "yellow"],
-            
-        }
-    ]
-  }
-
-  const dashBoardBarData = {
-    labels : ["Passed", "Failed", "Skipped"],
-    datasets : [
-        {
-            label : "Details",
-            data : dataDetails,
-            backgroundColor : ["green", "red", "yellow"],
-            borderColor : ["white"],
-            borderWidth : 2
-        }
-    ]
-  }
 
   function handleChartNameChange(){
     setChartName(chartName=="Bar" ? "Pie" : "Bar");

@@ -3,10 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HomeLayout from '../Layouts/Homelayout';
 import { toast, ToastContainer } from 'react-toastify';
+import countTestCases from '../Helpers/CountTestCases';
+import { useDispatch } from 'react-redux';
+import { addCounts } from '../Redux/Slices/CounterSlice';
 
 function Upload() {
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -20,10 +24,15 @@ function Upload() {
             return;
         }
 
+        const xmlText = await file.text();
+        const { p, f, s } = countTestCases(xmlText);
+        dispatch(addCounts({passed : p, failed : f, skipped : s}));
+
+
         const formData = new FormData();
         formData.append('file', file);
 
-        console.log("hello");
+        
         
 
         const toastId = toast.loading("Uploading file...");

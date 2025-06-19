@@ -10,18 +10,6 @@ function HomeLayout({children}){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // for checking use is logged in or not
-
-    // const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn);
-    
-
-    
-
-
-    // for displaying the options
-    // const role = useSelector((state)=> state.auth.role);
-    const role = "USER";
-
     function changeWidth(){
         const drawerSide = document.getElementsByClassName("drawer-side");
         drawerSide[0].style.width = 'auto' 
@@ -71,6 +59,9 @@ function HomeLayout({children}){
                         </li>
 
                         
+                        <li>
+                            <Link to={"/overallDashboard"}>Dashboard</Link>
+                        </li>                        
 
                         
                         <li>
@@ -80,6 +71,8 @@ function HomeLayout({children}){
                         <li>
                             <Link to={"/download"}>View/Download Files</Link>
                         </li>
+
+
 
                         <li>
                             <Link to={"/contact"}>Contact Us</Link> 
