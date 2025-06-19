@@ -23,12 +23,12 @@ const msalInstance = new PublicClientApplication(msalConfig);
 createRoot(document.getElementById('root')).render(
   <MsalProvider instance={msalInstance}>
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
+       <PersistGate loading={null} persistor={persistor}> 
         <BrowserRouter>
           <App />
           <Toaster />
         </BrowserRouter>
-      {/* </PersistGate> */}
+       </PersistGate> 
     </Provider>
   </MsalProvider>
 );

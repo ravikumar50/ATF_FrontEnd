@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from "react-router-dom";
-import { decrementCounts } from "../Redux/Slices/CounterSlice";
+import { decrementCounts, resetCounts } from "../Redux/Slices/CounterSlice";
 import { useDispatch } from "react-redux";
 import countTestCases from "../Helpers/CountTestCases";
 
@@ -167,6 +167,8 @@ function DownloadPage() {
             )}
           </ul>
         </div>
+
+        <button onClick={dispatch(resetCounts())}>Reset</button>
       </div>
       <ToastContainer position="top-center" theme="dark" />
     </HomeLayout>
