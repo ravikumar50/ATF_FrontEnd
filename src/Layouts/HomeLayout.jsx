@@ -56,14 +56,10 @@ function HomeLayout({children}){
                                 <AiFillCloseCircle size={24}/>
                             </button>
                         </li>
-                        {isAuthenticated && (
-                            <li>
-                                <Link to={"/overallDashboard"}>Dashboard</Link>
-                            </li>
-                            )
-                        }
-
-
+                        
+                        <li>
+                            <Link to={"/"}>Home</Link>
+                        </li>
                         
                         <li>
                             <Link to={"/overallDashboard"}>Dashboard</Link>
