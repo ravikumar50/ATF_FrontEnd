@@ -87,14 +87,22 @@ function DownloadPage() {
                     </button>
 
                     <button
+
                       onClick={async () => {
+                        let loadingToastId;
+
                         try {
-                          // Step 1: Fetch the file to get XML content
+                          // Step 1: Show persistent loading toast
+                          loadingToastId = toast.loading("Deleting file...", {
+                            position: "top-right",
+                          });
+
+                          // Step 2: Fetch the file and get test counts
                           const fileResponse = await fetch(file.url);
                           const xmlText = await fileResponse.text();
-
                           const { p, f, s } = countTestCases(xmlText);
-                          
+
+                          // Step 3: Call delete API
                           const deleteResponse = await fetch(
                             `https://functionapptry.azurewebsites.net/api/deleteBlob?filename=${file.name}`,
                             { method: 'DELETE' }
@@ -104,18 +112,33 @@ function DownloadPage() {
                             dispatch(decrementCounts({
                               passed: parseInt(p),
                               failed: parseInt(f),
-                              skipped: parseInt(s)
+                              skipped: parseInt(s),
                             }));
 
-                            toast.success("File deleted successfully");
+                            // Step 4: Dismiss loading toast and show success
+                            toast.dismiss(loadingToastId);
+                            toast.success("File deleted successfully", {
+                              position: "top-right",
+                              autoClose: 2000,
+                            });
+
+                            // Step 5: Refresh file list after slight delay
                             setTimeout(() => {
                               fetchFiles();
                             }, 1000);
                           } else {
-                            toast.error("Failed to delete the file");
+                            toast.dismiss(loadingToastId);
+                            toast.error("Failed to delete the file", {
+                              position: "top-right",
+                              autoClose: 2000,
+                            });
                           }
                         } catch (error) {
-                          toast.error("Error deleting file");
+                          toast.dismiss(loadingToastId);
+                          toast.error("Error deleting file", {
+                            position: "top-right",
+                            autoClose: 2000,
+                          });
                           console.error(error);
                         }
                       }}
@@ -123,7 +146,6 @@ function DownloadPage() {
                     >
                       Delete
                     </button>
-
 
                   </div>
                 </li>
