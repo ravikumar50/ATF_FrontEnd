@@ -12,6 +12,7 @@ import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import Sample1 from './assets/Files/Sample1.xml?raw';
 import OverallDashboard from './Pages/OverallDashboard';
+import About from './Pages/About';
 
 
 function App() {
@@ -27,6 +28,24 @@ function App() {
       />
 
       <Route
+        path="/download"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <DownloadPage />
+           </MsalAuthenticationTemplate>
+        }
+      />
+
+      <Route
+        path="/upload"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <Upload />
+           </MsalAuthenticationTemplate>
+        }
+      />
+
+      <Route
         path="/individualDashBoard"
         element={
            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
@@ -34,10 +53,36 @@ function App() {
            </MsalAuthenticationTemplate>
         }
       />
-      <Route path="/download" element={<DownloadPage />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/upload" element={<Upload/>} />
-      <Route path='/overAllDashboard' element={<OverallDashboard/>}/>
+
+      <Route
+        path="/overAllDashboard"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <OverallDashboard/>
+           </MsalAuthenticationTemplate>
+        }
+      />
+
+      <Route
+        path="/contact"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <Contact />
+           </MsalAuthenticationTemplate>
+        }
+      />
+
+      <Route
+        path="/about"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <About/>
+           </MsalAuthenticationTemplate>
+        }
+      />
+
+      
+      
     </Routes>
   );
 }
