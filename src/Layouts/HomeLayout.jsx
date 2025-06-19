@@ -7,6 +7,8 @@ import { useIsAuthenticated } from "@azure/msal-react";
 
 function HomeLayout({children}){
 
+    const isAuthenticated = useIsAuthenticated();
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -54,9 +56,13 @@ function HomeLayout({children}){
                                 <AiFillCloseCircle size={24}/>
                             </button>
                         </li>
-                        <li>
-                            <Link to={"/"}>Home</Link>
-                        </li>
+                        {isAuthenticated && (
+                            <li>
+                                <Link to={"/overallDashboard"}>Dashboard</Link>
+                            </li>
+                            )
+                        }
+
 
                         
                         <li>
