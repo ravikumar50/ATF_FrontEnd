@@ -14,9 +14,16 @@ const CounterSlice = createSlice({
         state.passed = 0;
         state.failed = 0;
         state.skipped = 0;
+        },
+        decrementCounts: (state, action) => {
+            const { passed, failed, skipped } = action.payload;
+            state.passed -= passed;
+            state.failed -= failed;
+            state.skipped -= skipped;
         }
+
     }
 })
 
-export const {addCounts, resetCounts} = CounterSlice.actions;
+export const {addCounts, resetCounts, decrementCounts} = CounterSlice.actions;
 export default CounterSlice.reducer;

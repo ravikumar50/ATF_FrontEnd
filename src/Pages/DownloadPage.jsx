@@ -4,11 +4,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from "react-router-dom";
+import { decrementCounts } from "../Redux/Slices/CounterSlice";
+import { useDispatch } from "react-redux";
+import countTestCases from "../Helpers/CountTestCases";
 
 function DownloadPage() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const fetchFiles = async () => {
     setLoading(true);
     try {
@@ -81,6 +85,43 @@ function DownloadPage() {
                     >
                       Dashboard
                     </button>
+
+                    <button
+                      onClick={async () => {
+                        try {
+                          // Step 1: Fetch the file to get XML content
+                          const fileResponse = await fetch(file.url);
+                          const xmlText = await fileResponse.text();
+
+                          const { p, f, s } = countTestCases(xmlText);
+                          
+                          const deleteResponse = await fetch(
+                            `https://functionapptry.azurewebsites.net/api/deleteBlob?filename=${file.name}`,
+                            { method: 'DELETE' }
+                          );
+
+                          if (deleteResponse.ok) {
+                            dispatch(decrementCounts({
+                              passed: parseInt(p),
+                              failed: parseInt(f),
+                              skipped: parseInt(s)
+                            }));
+
+                            toast.success("File deleted successfully");
+                            fetchFiles();
+                          } else {
+                            toast.error("Failed to delete the file");
+                          }
+                        } catch (error) {
+                          toast.error("Error deleting file");
+                          console.error(error);
+                        }
+                      }}
+                      className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                    >
+                      Delete
+                    </button>
+
 
                   </div>
                 </li>
