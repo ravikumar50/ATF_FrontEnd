@@ -25,11 +25,18 @@ function App() {
            </MsalAuthenticationTemplate>
         }
       />
-      <Route path="/logout" element={< Logout/>} />
+
+      <Route
+        path="/individualDashBoard"
+        element={
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <IndividualDashBoard />
+           </MsalAuthenticationTemplate>
+        }
+      />
       <Route path="/download" element={<DownloadPage />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/upload" element={<Upload/>} />
-      <Route path="/individualDashBoard" element={<IndividualDashBoard/>} />
       <Route path='/overAllDashboard' element={<OverallDashboard/>}/>
     </Routes>
   );
