@@ -167,8 +167,6 @@ function DownloadPage() {
             )}
           </ul>
         </div>
-
-        <button onClick={dispatch(resetCounts())}>Reset</button>
       </div>
       <ToastContainer position="top-center" theme="dark" />
     </HomeLayout>
