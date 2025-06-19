@@ -69,18 +69,36 @@ function DownloadPage() {
                     </a>
                     <button
                       onClick={async () => {
+                        let loadingToastId;
+
                         try {
+                          // Show loading toast
+                          loadingToastId = toast.loading("Loading dashboard...", {
+                            position: "top-right",
+                          });
+
                           const response = await fetch(file.url);
                           const text = await response.text(); // Get raw XML content
 
+                          // Dismiss loading toast and show success
+                          toast.dismiss(loadingToastId);
+                          toast.success("Dashboard loaded successfully", {
+                            position: "top-right",
+                            autoClose: 2000,
+                          });
+
                           navigate("/individualDashboard", { state: { sampleFile: text, fileName: file.name } });
+
                         } catch (err) {
+                          toast.dismiss(loadingToastId);
                           toast.error("Failed to load file.", {
                             position: "top-right",
                             autoClose: 2000,
                           });
+                          console.error(err);
                         }
                       }}
+
                       className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm font-semibold"
                     >
                       Dashboard
