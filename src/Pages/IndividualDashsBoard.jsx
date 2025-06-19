@@ -10,6 +10,7 @@ import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import PieChart from "../Components/PieChart";
 import BarChart from "../Components/BarChart";
+import countTestCases from "../Helpers/CountTestCases";
 
 
 
@@ -35,25 +36,13 @@ function IndividualDashBoard() {
       return;
     }
 
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(sampleFile, "application/xml");
+    const {p,f,s} = countTestCases(sampleFile);
+    
+    
 
-    const parserError = xmlDoc.getElementsByTagName("parsererror");
-    if (parserError.length > 0) {
-      console.error("Error parsing XML:", parserError[0].textContent);
-      return;
-    }
-
-    const namespace = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
-    const counters = xmlDoc.getElementsByTagNameNS(namespace, "Counters")[0];
-
-    if (!counters) {
-      console.log("Counters tag not found");
-      return;
-    }
-    setPassed(counters.getAttribute("passed"));
-    setFailed(counters.getAttribute("failed"));
-    setSkipped(counters.getAttribute("notExecuted"));
+    setPassed(p);
+    setFailed(f);
+    setSkipped(s);
 
     
   }, [sampleFile]);
@@ -112,7 +101,7 @@ function IndividualDashBoard() {
             </div>
           </div>
         </div>
-        <button onClick={handleChartNameChange} className="bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-md cursor-pointer text-white px-3 py-1">
+        <button onClick={handleChartNameChange} className="bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-md cursor-pointer text-white px-3">
           Click here to see {chartName=="Pie" ? "Bar" : "Pie"} chart
         </button>
       </div>
