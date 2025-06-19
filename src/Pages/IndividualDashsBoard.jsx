@@ -20,14 +20,17 @@ ChartJs.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 
 function IndividualDashBoard() {
-    
+  
   const location = useLocation();
-  const { sampleFile } = location.state || { sampleFile: '' };
   const [passed, setPassed] = useState(0);
   const [failed, setFailed] = useState(0);  
   const [skipped, setSkipped] = useState(0);
-
   const [chartName, setChartName] = useState("Pie");
+
+  const { sampleFile, fileName } = location.state || { sampleFile: '', fileName: 'Unknown File' };  
+
+
+  
 
 
   useEffect(() => {
@@ -57,8 +60,12 @@ function IndividualDashBoard() {
     <HomeLayout>
       <div className="pt-5 flex flex-col items-center gap-3 text-white px-4 pb-20">
         <h1 className="text-center text-3xl font-semibold text-yellow-500">
-            Dashboard
+          Dashboard
         </h1>
+        <h2 className="text-center text-lg text-gray-200 mt-1 font-semibold">
+          {fileName}
+        </h2>
+
 
         <div className="flex flex-col gap-5 m-auto mx-10">
           <div className="flex justify-center items-center w-full">

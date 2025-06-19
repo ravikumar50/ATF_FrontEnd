@@ -96,8 +96,6 @@ function HomeLayout({children}){
             
             </div>
             {children}
-
-            <Footer/>
         </div>
     )
 }

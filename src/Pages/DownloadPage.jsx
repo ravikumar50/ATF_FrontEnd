@@ -73,7 +73,7 @@ function DownloadPage() {
                           const response = await fetch(file.url);
                           const text = await response.text(); // Get raw XML content
 
-                          navigate("/individualDashboard", { state: { sampleFile: text } });
+                          navigate("/individualDashboard", { state: { sampleFile: text, fileName: file.name } });
                         } catch (err) {
                           toast.error("Failed to load file.", {
                             position: "top-right",
@@ -108,7 +108,9 @@ function DownloadPage() {
                             }));
 
                             toast.success("File deleted successfully");
-                            fetchFiles();
+                            setTimeout(() => {
+                              fetchFiles();
+                            }, 1000);
                           } else {
                             toast.error("Failed to delete the file");
                           }
