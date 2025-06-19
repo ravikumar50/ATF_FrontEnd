@@ -127,11 +127,7 @@ function DownloadPage() {
                           );
 
                           if (deleteResponse.ok) {
-                            dispatch(decrementCounts({
-                              passed: parseInt(p),
-                              failed: parseInt(f),
-                              skipped: parseInt(s),
-                            }));
+                            // dispatch(decrementCounts({passed: parseInt(p),failed: parseInt(f),skipped: parseInt(s),}));
 
                             // Step 4: Dismiss loading toast and show success
                             toast.dismiss(loadingToastId);
