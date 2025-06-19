@@ -1,9 +1,9 @@
 import { useMsal } from "@azure/msal-react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { loginSuccess, logoutSuccess } from "./redux/authSlice";
+import { loginSuccess, logoutSuccess } from "../../Redux/Slices/AuthSlice";
 
-function AuthSync() {
+export default function AuthSync() {
   const { accounts } = useMsal();
   const dispatch = useDispatch();
 
@@ -13,12 +13,12 @@ function AuthSync() {
       dispatch(loginSuccess({
         name: user.name,
         username: user.username,
-        email: user.username, // usually email
+        email: user.username,
       }));
     } else {
       dispatch(logoutSuccess());
     }
   }, [accounts]);
 
-  return null; // it's a logic component
+  return null;
 }

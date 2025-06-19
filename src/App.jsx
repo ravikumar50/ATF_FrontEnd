@@ -11,8 +11,8 @@ import About from './Pages/About';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
-
 import AuthSync from './Components/Auth/AuthSync';
+
 
 function App() {
   return (
