@@ -154,7 +154,9 @@ function DownloadPage() {
           </ul>
         </div>
       </div>
+      <ToastContainer position="top-center" theme="dark" />
     </HomeLayout>
+    
   );
 }
 
