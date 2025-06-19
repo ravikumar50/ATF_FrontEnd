@@ -55,7 +55,7 @@ function App() {
       />
 
       <Route
-        path="/overAllDashboard"
+        path="/overallDashboard"
         element={
            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
             <OverallDashboard/>
