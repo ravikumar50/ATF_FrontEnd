@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { loginSuccess, logoutSuccess } from "./redux/authSlice";
 
-function RequireAuth() {
+function AuthSync() {
   const { accounts } = useMsal();
   const dispatch = useDispatch();
 
