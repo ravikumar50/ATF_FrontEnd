@@ -17,78 +17,78 @@ import AuthSync from './Components/Auth/AuthSync';
 function App() {
   return (
     <>
-      {/* <AuthSync />  */}
+      <AuthSync /> 
 
       <Routes>
         <Route
           path="/"
           element={
-          //  <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <HomePage />
-          //  </MsalAuthenticationTemplate>
+           </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/download"
           element={
-            //<MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <DownloadPage />
-            //</MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/upload"
           element={
-            //<MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Upload />
-            //</MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/individualDashBoard"
           element={
-            //<MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <IndividualDashBoard />
-           // </MsalAuthenticationTemplate>
+           </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/overallDashboard"
           element={
-            //<MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <OverallDashboard />
-           // </MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/contact"
           element={
-           // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Contact />
-           // </MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/about"
           element={
-           // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <About />
-           // </MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/logout"
           element={
-           // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+            <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Logout />
-           // </MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
