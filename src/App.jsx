@@ -17,73 +17,74 @@ import About from './Pages/About';
 
 function App() {
   return (
+    <>
+    <AuthSync />
+    
     <Routes>
       <Route
         path="/"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <HomePage />
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/download"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <DownloadPage />
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/upload"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <Upload />
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/individualDashBoard"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <IndividualDashBoard />
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/overallDashboard"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <OverallDashboard/>
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/contact"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <Contact />
-           </MsalAuthenticationTemplate>
+           
         }
       />
 
       <Route
         path="/about"
         element={
-           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           
             <About/>
-           </MsalAuthenticationTemplate>
+           
         }
       />
-
-      
-      
     </Routes>
+    </>
   );
 }
 
