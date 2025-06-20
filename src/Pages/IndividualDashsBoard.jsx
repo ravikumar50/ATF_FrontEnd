@@ -60,20 +60,23 @@ function IndividualDashBoard() {
   return (
     <HomeLayout>
       <div className="pt-5 flex flex-col items-center gap-3 text-white px-4 pb-20">
-        <h1 className="text-center text-3xl font-semibold text-yellow-500">
-          Dashboard
-        </h1>
-        <h2 className="text-center text-lg text-gray-200 mt-1 font-semibold">
-          {fileName}
-        </h2>
+        <div className="flex items-center justify-center gap-3">
+          <h1 className="text-center text-3xl font-semibold text-yellow-500">
+            Dashboard : 
+          </h1>
+          <h2 className="text-center text-3xl text-gray-200 font-semibold">
+             {fileName}
+          </h2>
+        </div>
+        
 
 
         <div className="flex flex-col gap-5 m-auto mx-10">
           <div className="flex justify-center items-center w-full">
-            <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-700 rounded-md w-120 max-w-3xl">
+            <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-100 rounded-md w-160 max-w-3xl">
               {
-                chartName=="Pie" ? <PieChart passed={passed} failed={failed} skipped={skipped} /> : 
-                  <BarChart passed={passed} failed={failed} skipped={skipped} />                 
+                chartName=="Pie" ? <PieChart Passed={passed} Failed={failed} Warning={warning} Skipped={skipped} /> : 
+                  <BarChart Passed={passed} Failed={failed} Warning={warning} Skipped={skipped}  />                 
               }
               
             </div>
