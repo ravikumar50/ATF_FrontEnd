@@ -16,7 +16,8 @@ function BarChart({ Passed, Failed, Warning, Skipped}){
             data : dataDetails,
             backgroundColor: ["green", "red", "gray","#FFBF78"],
             borderColor : ["white"],
-            borderWidth : 2
+            borderWidth : 2,
+            barThickness: 37
         }
     ]
   }
