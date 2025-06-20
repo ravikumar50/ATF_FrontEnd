@@ -26,7 +26,7 @@ function IndividualDashBoard() {
   const [failed, setFailed] = useState(0);  
   const [skipped, setSkipped] = useState(0);
   const [chartName, setChartName] = useState("Pie");
-
+  const [warning, setWarning] = useState(0);
   const { sampleFile, fileName } = location.state || { sampleFile: '', fileName: 'Unknown File' };  
 
 
@@ -39,14 +39,15 @@ function IndividualDashBoard() {
       return;
     }
 
-    const {p,f,s} = countTestCases(sampleFile);
+    const {Passed,Failed,Warning,Skipped} = countTestCases(sampleFile);
     
-    
+    // console.log(Passed,Failed,Warning,Skipped);
 
-    setPassed(p);
-    setFailed(f);
-    setSkipped(s);
 
+    setPassed(Passed);
+    setFailed(Failed);    
+    setSkipped(Skipped);
+    setWarning(Warning);
     
   }, [sampleFile]);
 
