@@ -6,7 +6,6 @@ import { __DO_NOT_USE__ActionTypes } from "@reduxjs/toolkit";
 import HomeLayout from "../Layouts/Homelayout";
 import PieChart from "../Components/PieChart";
 import BarChart from "../Components/BarChart";
-import countTestCases from "../Helpers/countTestCases";
 import { toast, ToastContainer } from "react-toastify";
 
 
@@ -20,7 +19,7 @@ function IndividualDashBoard() {
   
   const location = useLocation();
   const navigate = useNavigate();
-  const [chartName, setChartName] = useState("Pie");
+  const [chartName, setChartName] = useState("Bar");
 
   const [testCounts, setTestCounts] = useState({
     passed: 0,
@@ -42,28 +41,41 @@ function IndividualDashBoard() {
   });
 
   
-  const { sampleFile, fileName } = location.state || { sampleFile: '', fileName: 'Unknown File' };  
-
-
-  
-
-
+  const fileName = location.state?.fileName;
 
   useEffect(() => {
-    if (!sampleFile || !fileName) {
-      toast.error("No file provided.");
-      setTimeout(()=>{
-        navigate("/")
-      },1500)
-      
+    if (!fileName) {
+      toast.error("No file provided. Redirecting to homepage...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
       return;
     }
 
-    const testResultCounts = countTestCases(sampleFile);
-    setTestCounts(testResultCounts);
-  }, [sampleFile]);
+    async function fetchParsedCounts() {
+      const loadingToastId = toast.loading("Loading Dashboard...");
+      try {
+        const res = await fetch(`https://functionapptry.azurewebsites.net/api/parseTrx?filename=${fileName}`);
+        if (!res.ok) {
+          throw new Error("Failed to parse TRX");
+        }
+        const parsedCounts = await res.json();
+        setTestCounts(parsedCounts);
+        toast.dismiss(loadingToastId);  // Dismiss loading toast
+        toast.success("Dashboard loaded!", { autoClose: 1000 });
 
-  console.log(testCounts);
+      } catch (err) {
+        console.error(err);
+        toast.dismiss(loadingToastId);
+        toast.error("Failed to parse file.");
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      }
+    }
+
+    fetchParsedCounts();
+  }, [fileName]);
   
 
 
@@ -105,7 +117,7 @@ function IndividualDashBoard() {
         </button>
       </div>
     </HomeLayout>
-    <ToastContainer position="top-center" theme="dark" />
+    <ToastContainer position="top-right" theme="dark" />
     </>
   );
 }

@@ -4,9 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from "react-router-dom";
-import { decrementCounts, resetCounts } from "../Redux/Slices/CounterSlice";
-import { useDispatch } from "react-redux";
-import countTestCases from "../Helpers/countTestCases";
+import { useDispatch } from "react-redux";;
 
 function Files() {
   const [files, setFiles] = useState([]);
@@ -77,8 +75,8 @@ function Files() {
                             position: "top-right",
                           });
 
-                          const response = await fetch(file.url);
-                          const text = await response.text(); // Get raw XML content
+                          
+                          
 
                           // Dismiss loading toast and show success
                           toast.dismiss(loadingToastId);
@@ -87,7 +85,7 @@ function Files() {
                             autoClose: 2000,
                           });
 
-                          navigate("/individualDashboard", { state: { sampleFile: text, fileName: file.name } });
+                          navigate("/individualDashboard", { state: {fileName: file.name } });
 
                         } catch (err) {
                           toast.dismiss(loadingToastId);

@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import HomeLayout from '../Layouts/Homelayout';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { addCounts } from '../Redux/Slices/CounterSlice';
-import countTestCases from '../Helpers/countTestCases';
 
 function Upload() {
     const [file, setFile] = useState(null);
@@ -24,9 +22,7 @@ function Upload() {
             return;
         }
 
-        const xmlText = await file.text();
-        const { p, f, s } = countTestCases(xmlText);
-        dispatch(addCounts({passed : p, failed : f, skipped : s}));
+        
 
 
         const formData = new FormData();

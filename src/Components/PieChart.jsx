@@ -15,7 +15,7 @@ ChartJs.register(ArcElement, Tooltip, Legend);
 
 function PieChart({testCounts}) {
   const testCaseData = [
-    { name: "Total", key: "total", icon: <FaListAlt />, color: "#f5f5f5" },
+    { name: "Total", key: "total", icon: <FaListAlt />, color: "white" },
     { name: "Passed", key: "passed", icon: <SiTicktick />, color: "#28a745" },
     { name: "Failed", key: "failed", icon: <ImCross />, color: "#dc3545" },
     { name: "Skipped", key: "skipped", icon: <BiSolidSkipNextCircle />, color: "#6c757d" },
