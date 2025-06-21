@@ -14,6 +14,7 @@ import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { IoIosWarning } from "react-icons/io";
 import {
+    FaListAlt,
   FaBug,
   FaHourglassHalf,
   FaBan,
@@ -40,6 +41,7 @@ ChartJs.register(
 
 function BarChart({ testCounts }) {
   const testCaseData = [
+    { name: "Total", key: "total", icon: <FaListAlt />, color: "#343a40" },
     { name: "Passed", key: "passed", icon: <SiTicktick />, color: "#28a745" },
     { name: "Failed", key: "failed", icon: <ImCross />, color: "#dc3545" },
     { name: "Skipped", key: "skipped", icon: <BiSolidSkipNextCircle />, color: "#6c757d" },
@@ -65,23 +67,22 @@ function BarChart({ testCounts }) {
       color: item.color
     }));
 
-  const barLabels = activeCards.map(item => item.name);
-  const barData = activeCards.map(item => item.count);
-  const barColors = activeCards.map(item => item.color);
+  const barChartData = activeCards.filter(item => item.name !== "Total");
 
   const dashBoardBarData = {
-    labels: barLabels,
+    labels: barChartData.map(item => item.name),
     datasets: [
-      {
+        {
         label: "Details",
-        data: barData,
-        backgroundColor: barColors,
+        data: barChartData.map(item => item.count),
+        backgroundColor: barChartData.map(item => item.color),
         borderColor: "white",
         borderWidth: 2,
         barThickness: 37
-      }
+        }
     ]
   };
+
 
   const groupedSlides = [];
   for (let i = 0; i < activeCards.length; i += 3) {

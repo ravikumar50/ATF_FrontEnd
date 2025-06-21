@@ -4,9 +4,10 @@ import { SiTicktick } from "react-icons/si";
 import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { IoIosWarning } from "react-icons/io";
-import {FaBug, FaHourglassHalf, FaBan, FaQuestionCircle, FaCheckDouble, FaTimesCircle, FaPlug, FaCheckCircle, FaSyncAlt, FaClock } from "react-icons/fa";
+import {FaListAlt,FaBug, FaHourglassHalf, FaBan, FaQuestionCircle, FaCheckDouble, FaTimesCircle, FaPlug, FaCheckCircle, FaSyncAlt, FaClock } from "react-icons/fa";
 import CarouselSlide from "./CaraouselSlide";
 import { useState } from "react";
+
 
 
 ChartJs.register(ArcElement, Tooltip, Legend);
@@ -14,6 +15,7 @@ ChartJs.register(ArcElement, Tooltip, Legend);
 
 function PieChart({testCounts}) {
   const testCaseData = [
+    { name: "Total", key: "total", icon: <FaListAlt />, color: "#f5f5f5" },
     { name: "Passed", key: "passed", icon: <SiTicktick />, color: "#28a745" },
     { name: "Failed", key: "failed", icon: <ImCross />, color: "#dc3545" },
     { name: "Skipped", key: "skipped", icon: <BiSolidSkipNextCircle />, color: "#6c757d" },
@@ -31,7 +33,9 @@ function PieChart({testCounts}) {
   ];
 
 
-  const filteredData = testCaseData.filter(item => testCounts[item.key] > 0);
+  const filteredData = testCaseData.filter(
+    item => item.key !== "total" && testCounts[item.key] > 0
+  );
 
   const dashBoardPieData = {
     labels: filteredData.map(item => item.name),
