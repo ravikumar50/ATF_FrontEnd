@@ -7,7 +7,7 @@ import { useState } from "react";
 function OverallDashboard(){
 
   //  const {passed,failed,skipped} = useSelector((state)=> state.counter)
-      const [passed, failed, warning, skipped] = [10,15,20,3];
+      const {passed, failed, warning, skipped} = [10,15,20,3];
 
     const [chartName, setChartName] = useState("Pie");
 

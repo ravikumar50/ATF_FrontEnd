@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import Footer from "../Components/Footer";
 import { useIsAuthenticated } from "@azure/msal-react";
+import { ToastContainer } from "react-toastify";
 
 function HomeLayout({children}){
 
@@ -96,6 +97,7 @@ function HomeLayout({children}){
             
             </div>
             {children}
+            
         </div>
     )
 }

@@ -1,76 +1,111 @@
-import {Chart as ChartJs, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title} from "chart.js"
+import {Chart as ChartJs,ArcElement,Tooltip,Legend,CategoryScale,LinearScale,BarElement,Title} from "chart.js";
 import {Pie} from "react-chartjs-2"
 import { SiTicktick } from "react-icons/si";
 import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { IoIosWarning } from "react-icons/io";
+import {FaBug, FaHourglassHalf, FaBan, FaQuestionCircle, FaCheckDouble, FaTimesCircle, FaPlug, FaCheckCircle, FaSyncAlt, FaClock } from "react-icons/fa";
+import CarouselSlide from "./CaraouselSlide";
+import { useState } from "react";
 
 
-function PieChart({ Passed, Failed, Warning, Skipped}) {
-  const dataDetails = [Passed, Failed, Warning, Skipped];
+ChartJs.register(ArcElement, Tooltip, Legend);
+
+
+function PieChart({testCounts}) {
+  const testCaseData = [
+    { name: "Passed", key: "passed", icon: <SiTicktick />, color: "#28a745" },
+    { name: "Failed", key: "failed", icon: <ImCross />, color: "#dc3545" },
+    { name: "Skipped", key: "skipped", icon: <BiSolidSkipNextCircle />, color: "#6c757d" },
+    { name: "Warning", key: "warning", icon: <IoIosWarning />, color: "#ffc107" },
+    { name: "Error", key: "error", icon: <FaBug />, color: "#a71d2a" },
+    { name: "Timeout", key: "timeout", icon: <FaHourglassHalf />, color: "#6f42c1" },
+    { name: "Aborted", key: "aborted", icon: <FaBan />, color: "#fd7e14" },
+    { name: "Inconclusive", key: "inconclusive", icon: <FaQuestionCircle />, color: "#adb5bd" },
+    { name: "PassedAborted", key: "passedButRunAborted", icon: <FaCheckDouble />, color: "#20c997" },
+    { name: "NotRunnable", key: "notRunnable", icon: <FaTimesCircle />, color: "#f5c6cb" },
+    { name: "Disconnected", key: "disconnected", icon: <FaPlug />, color: "#5a6268" },
+    { name: "Completed", key: "completed", icon: <FaCheckCircle />, color: "#007bff" },
+    { name: "InProgress", key: "inProgress", icon: <FaSyncAlt />, color: "#17a2b8" },
+    { name: "Pending", key: "pending", icon: <FaClock />, color: "#ffe066" }
+  ];
+
+
+  const filteredData = testCaseData.filter(item => testCounts[item.key] > 0);
 
   const dashBoardPieData = {
-    labels: ["Passed", "Failed", "Skipped", "Warning"],
+    labels: filteredData.map(item => item.name),
     datasets: [
       {
-        label: "Details",
-        data: dataDetails,
-        backgroundColor: ["green", "red", "gray","#FFBF78"],
-        borderWidth: 1,
-        borderColor: ["green", "red", "gray", "#FFBF78"],
-      },
-    ],
+        label: "Test Case Summary",
+        data: filteredData.map(item => testCounts[item.key]),
+        backgroundColor: filteredData.map(item => item.color),
+        borderColor: "white",
+        borderWidth: 1
+      }
+    ]
   };
+
+  const activeCards = testCaseData
+    .filter(item => testCounts[item.key] > 0)
+    .map(item => ({
+      name: item.name,
+      count: testCounts[item.key],
+      icon: item.icon,
+      color: item.color
+  }));
+
+
+  const groupedSlides = [];
+  for (let i = 0; i < activeCards.length; i += 3) {
+    groupedSlides.push(activeCards.slice(i, i + 3));
+  }
+
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-70 h-70">
+      <div className="w-full max-w-[700px] h-[300px]">
+
         <Pie
           data={dashBoardPieData}
           options={{
             plugins: {
               legend: {
+                position : 'top',
+                align : 'center',
+                fullSize : false,
                 labels: {
-                  color: "black",
+                  color: 'black',
+                  boxWidth: 20,
+                  padding: 10,
+                  usePointStyle: true,
                 },
+              }
+            },
+            layout: {
+              padding: {
+                top: 10,
               },
             },
+            responsive: true,
+            maintainAspectRatio: false,
           }}
         />
       </div>
 
-      <div className="flex items-center justify-center gap-3 mt-5">
-        <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
-          <div className="flex flex-col">
-            <p className="font-semibold">Passed</p>
-            <h3 className="text-4xl font-bold">{Passed}</h3>
-          </div>
-          <SiTicktick className="text-3xl text-green-500" />
-        </div>
-
-        <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
-          <div className="flex flex-col">
-            <p className="font-semibold">Failed</p>
-            <h3 className="text-4xl font-bold">{Failed}</h3>
-          </div>
-          <ImCross className="text-3xl text-red-500" />
-        </div>
-
-        <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
-          <div className="flex flex-col">
-            <p className="font-semibold">Skipped</p>
-            <h3 className="text-4xl font-bold">{Skipped}</h3>
-          </div>
-          <BiSolidSkipNextCircle className="text-3xl text-gray-400" />
-        </div>
-
-        <div className="flex items-center justify-center p-5 gap-5 rounded-md shadow-2xl bg-gray-600">
-          <div className="flex flex-col">
-            <p className="font-semibold">Warning</p>
-            <h3 className="text-4xl font-bold">{Warning}</h3>
-          </div>
-          <IoIosWarning  className="text-3xl" style={{color:"#FFBF78"}} />
-        </div>
+      {/* Carousel Slides */}
+      <div className="carousel w-full mt-10 overflow-visible">
+        {groupedSlides.map((group, index) => (
+          <CarouselSlide
+            key={index}
+            items={group}
+            slideNumber={index}
+            totalSlides={groupedSlides.length}
+            currentSlide={currentSlide}
+            setCurrentSlide={setCurrentSlide}
+          />
+        ))}
       </div>
     </div>
   );
