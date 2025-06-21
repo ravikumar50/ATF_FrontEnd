@@ -41,14 +41,19 @@ function IndividualDashBoard() {
   });
 
   
-  const fileName = location.state?.fileName;
+  const {fileName} = location.state;
+
+
+  
+
+
 
   useEffect(() => {
     if (!fileName) {
-      toast.error("No file provided. Redirecting to homepage...");
+      toast.error("No file provided.");
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1500);
       return;
     }
 
@@ -62,8 +67,7 @@ function IndividualDashBoard() {
         const parsedCounts = await res.json();
         setTestCounts(parsedCounts);
         toast.dismiss(loadingToastId);  // Dismiss loading toast
-        toast.success("Dashboard loaded!", { autoClose: 1000 });
-
+        toast.success("Dashboard loaded!" ,{autoClose : 1000});
       } catch (err) {
         console.error(err);
         toast.dismiss(loadingToastId);
@@ -76,6 +80,8 @@ function IndividualDashBoard() {
 
     fetchParsedCounts();
   }, [fileName]);
+
+  
   
 
 
@@ -117,7 +123,7 @@ function IndividualDashBoard() {
         </button>
       </div>
     </HomeLayout>
-    <ToastContainer position="top-right" theme="dark" />
+    <ToastContainer position="top-center" theme="dark" />
     </>
   );
 }
