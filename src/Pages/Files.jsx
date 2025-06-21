@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { decrementCounts, resetCounts } from "../Redux/Slices/CounterSlice";
 import { useDispatch } from "react-redux";
-import countTestCases from "../Helpers/CountTestCases";
+import countTestCases from "../Helpers/countTestCases";
 
 function Files() {
   const [files, setFiles] = useState([]);
@@ -115,13 +115,19 @@ function Files() {
                             position: "top-right",
                           });
 
+                          // Step 2: Fetch the file and get test counts
+                          // const fileResponse = await fetch(file.url);
+                          // const xmlText = await fileResponse.text();
+                          // const { p, f, s } = countTestCases(xmlText);
+
+                          // Step 3: Call delete API
                           const deleteResponse = await fetch(
                             `https://functionapptry.azurewebsites.net/api/deleteBlob?filename=${file.name}`,
                             { method: 'DELETE' }
                           );
 
                           if (deleteResponse.ok) {
-                             dispatch(decrementCounts({passed: parseInt(p),failed: parseInt(f),skipped: parseInt(s),}));
+                          //   dispatch(decrementCounts({passed: parseInt(p),failed: parseInt(f),skipped: parseInt(s),}));
 
                             // Step 4: Dismiss loading toast and show success
                             toast.dismiss(loadingToastId);
