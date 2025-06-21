@@ -8,7 +8,7 @@ import { decrementCounts, resetCounts } from "../Redux/Slices/CounterSlice";
 import { useDispatch } from "react-redux";
 import countTestCases from "../Helpers/CountTestCases";
 
-function DownloadPage() {
+function Files() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -115,12 +115,6 @@ function DownloadPage() {
                             position: "top-right",
                           });
 
-                          // Step 2: Fetch the file and get test counts
-                          const fileResponse = await fetch(file.url);
-                          const xmlText = await fileResponse.text();
-                          const { p, f, s } = countTestCases(xmlText);
-
-                          // Step 3: Call delete API
                           const deleteResponse = await fetch(
                             `https://functionapptry.azurewebsites.net/api/deleteBlob?filename=${file.name}`,
                             { method: 'DELETE' }
@@ -174,4 +168,4 @@ function DownloadPage() {
   );
 }
 
-export default DownloadPage;
+export default Files;

@@ -1,43 +1,14 @@
-import {
-  Chart as ChartJs,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title
-} from "chart.js";
+import {Chart as ChartJs,ArcElement,Tooltip,Legend,CategoryScale,LinearScale,BarElement,Title} from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { SiTicktick } from "react-icons/si";
 import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { IoIosWarning } from "react-icons/io";
-import {
-    FaListAlt,
-  FaBug,
-  FaHourglassHalf,
-  FaBan,
-  FaQuestionCircle,
-  FaCheckDouble,
-  FaTimesCircle,
-  FaPlug,
-  FaCheckCircle,
-  FaSyncAlt,
-  FaClock
-} from "react-icons/fa";
+import { FaListAlt,FaBug,FaHourglassHalf,FaBan,FaQuestionCircle,FaCheckDouble,FaTimesCircle,FaPlug,FaCheckCircle,FaSyncAlt,FaClock} from "react-icons/fa";
 import CarouselSlide from "./CaraouselSlide";
 import { useState } from "react";
 
-ChartJs.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title
-);
+ChartJs.register(ArcElement,Tooltip,Legend,CategoryScale,LinearScale,BarElement,Title);
 
 function BarChart({ testCounts }) {
   const testCaseData = [

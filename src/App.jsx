@@ -1,13 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage';
-import DownloadPage from './Pages/DownloadPage';
 import Contact from './Pages/Contact';
 import Logout from './Pages/Logout';
 import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import OverallDashboard from './Pages/OverallDashboard';
 import About from './Pages/About';
+import Files from './Pages/Files';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
@@ -30,10 +30,10 @@ function App() {
         />
 
         <Route
-          path="/download"
+          path="/files"
           element={
             // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <DownloadPage />
+              <Files />
             // </MsalAuthenticationTemplate>
           }
         />

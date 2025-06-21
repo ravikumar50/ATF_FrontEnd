@@ -72,7 +72,7 @@ function HomeLayout({children}){
                         </li>
 
                         <li>
-                            <Link to={"/download"}>View/Download Files</Link>
+                            <Link to={"/files"}>View Files</Link>
                         </li>
 
 
