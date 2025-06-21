@@ -8,9 +8,35 @@ import {FaListAlt,FaBug, FaHourglassHalf, FaBan, FaQuestionCircle, FaCheckDouble
 import CarouselSlide from "./CaraouselSlide";
 import { useState } from "react";
 
+const centerTextPlugin = {
+  id: 'centerTextPlugin',
+  afterDraw: (chart) => {
+    const { width, height, ctx } = chart;
+    const dataset = chart.data.datasets[0];
+    const meta = chart.getDatasetMeta(0);
+
+    // Find the only visible segment
+    const visibleIndexes = meta.data.map((_, i) => !meta.data[i].hidden);
+    const visibleCount = visibleIndexes.filter(Boolean).length;
+    const visibleIndex = visibleIndexes.indexOf(true);
+
+    if (visibleCount === 1 && visibleIndex !== -1) {
+      const value = dataset.data[visibleIndex];
+      const label = chart.data.labels[visibleIndex];
+
+      ctx.save();
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${label}: ${value}`, width/2, height/2+18);
+      ctx.restore();
+    }
+  }
+};
 
 
-ChartJs.register(ArcElement, Tooltip, Legend);
+ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin);
 
 
 function PieChart({testCounts}) {
@@ -45,7 +71,7 @@ function PieChart({testCounts}) {
         data: filteredData.map(item => testCounts[item.key]),
         backgroundColor: filteredData.map(item => item.color),
         borderColor: "white",
-        borderWidth: 1
+        borderWidth: 0
       }
     ]
   };
@@ -74,27 +100,60 @@ function PieChart({testCounts}) {
         <Pie
           data={dashBoardPieData}
           options={{
-            plugins: {
-              legend: {
-                position : 'top',
-                align : 'center',
-                fullSize : false,
-                labels: {
-                  color: 'black',
-                  boxWidth: 20,
-                  padding: 10,
-                  usePointStyle: true,
-                },
-              }
-            },
-            layout: {
-              padding: {
-                top: 10,
-              },
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-          }}
+  plugins: {
+    legend: {
+      position: 'top',
+      align: 'center',
+      fullSize: false,
+      labels: {
+        color: 'black',
+        boxWidth: 20,
+        padding: 10,
+        usePointStyle: true,
+      },
+      // 👇 Override default click
+      onClick: (e, legendItem, legend) => {
+        const chart = legend.chart;
+        const index = legendItem.index;
+        const meta = chart.getDatasetMeta(0);
+
+        // Count how many are currently hidden
+        const visibleCount = meta.data.filter((_, i) => !meta.data[i].hidden).length;
+
+        // If only one is visible, reset (show all)
+        if (visibleCount === 1 && !meta.data[index].hidden) {
+          meta.data.forEach((_, i) => {
+            chart.getDatasetMeta(0).data[i].hidden = false;
+          });
+        } else {
+          // Hide all except selected
+          meta.data.forEach((_, i) => {
+            chart.getDatasetMeta(0).data[i].hidden = i !== index;
+          });
+        }
+
+        chart.update();
+      }
+    },
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          const label = context.label || '';
+          const value = context.raw;
+          return `${label}: ${value}`;
+        }
+      }
+    }
+  },
+  layout: {
+    padding: {
+      top: 10,
+    },
+  },
+  responsive: true,
+  maintainAspectRatio: false,
+}}
+
         />
       </div>
 
