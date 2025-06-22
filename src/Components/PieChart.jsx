@@ -5,8 +5,9 @@ import { ImCross } from "react-icons/im";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { IoIosWarning } from "react-icons/io";
 import {FaListAlt,FaBug, FaHourglassHalf, FaBan, FaQuestionCircle, FaCheckDouble, FaTimesCircle, FaPlug, FaCheckCircle, FaSyncAlt, FaClock } from "react-icons/fa";
-import CarouselSlide from "./CaraouselSlide";
 import { useState } from "react";
+import CarouselSlide from "./CaraouselSlide";
+
 
 const centerTextPlugin = {
   id: 'centerTextPlugin',
@@ -15,7 +16,7 @@ const centerTextPlugin = {
     const dataset = chart.data.datasets[0];
     const meta = chart.getDatasetMeta(0);
 
-    // Find the only visible segment
+  
     const visibleIndexes = meta.data.map((_, i) => !meta.data[i].hidden);
     const visibleCount = visibleIndexes.filter(Boolean).length;
     const visibleIndex = visibleIndexes.indexOf(true);
@@ -36,7 +37,21 @@ const centerTextPlugin = {
 };
 
 
-ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin);
+const boldLegendPlugin = {
+  id: 'boldLegendPlugin',
+  beforeDraw: (chart) => {
+    const legend = chart.legend;
+    if (!legend || !legend.legendItems) return;
+
+    legend.legendItems.forEach((item, index) => {
+      if (chart.config.options.plugins.legend.selectedIndex !== undefined) {
+        item.fontStyle = index === chart.config.options.plugins.legend.selectedIndex ? 'bold' : 'normal';
+      }
+    });
+  }
+};
+
+ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin,boldLegendPlugin);
 
 
 function PieChart({testCounts}) {
@@ -123,9 +138,7 @@ function PieChart({testCounts}) {
                         text: label,
                         fillStyle: data.datasets[0].backgroundColor[i],
                         hidden: hidden,
-                        index: i,
-                        fontColor: 'black',
-                        fontStyle: i === selectedLegendIndex ? 'bold' : 'normal',
+                        index: i
                       };
                     });
                   }
@@ -143,17 +156,20 @@ function PieChart({testCounts}) {
                   meta.data.forEach((_, i) => {
                     chart.getDatasetMeta(0).data[i].hidden = false;
                   });
-                  setSelectedLegendIndex(null); // Reset selection
+                  chart.options.plugins.legend.selectedIndex = null;
+                  setSelectedLegendIndex(null);
                 } else {
                   meta.data.forEach((_, i) => {
                     chart.getDatasetMeta(0).data[i].hidden = i !== index;
                   });
-                  setSelectedLegendIndex(index); // Set selected index
+                  chart.options.plugins.legend.selectedIndex = index;
+                  setSelectedLegendIndex(index);
                 }
-
                 chart.update();
-              }
-            },
+              },
+              selectedIndex: selectedLegendIndex // Custom option for our plugin
+            }
+            ,
             tooltip: {
               callbacks: {
                 label: function (context) {
