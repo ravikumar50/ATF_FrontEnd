@@ -16,7 +16,7 @@ const centerTextPlugin = {
     const dataset = chart.data.datasets[0];
     const meta = chart.getDatasetMeta(0);
 
-  
+    // Find the only visible segment
     const visibleIndexes = meta.data.map((_, i) => !meta.data[i].hidden);
     const visibleCount = visibleIndexes.filter(Boolean).length;
     const visibleIndex = visibleIndexes.indexOf(true);
@@ -37,21 +37,7 @@ const centerTextPlugin = {
 };
 
 
-const boldLegendPlugin = {
-  id: 'boldLegendPlugin',
-  beforeDraw: (chart) => {
-    const legend = chart.legend;
-    if (!legend || !legend.legendItems) return;
-
-    legend.legendItems.forEach((item, index) => {
-      if (chart.config.options.plugins.legend.selectedIndex !== undefined) {
-        item.fontStyle = index === chart.config.options.plugins.legend.selectedIndex ? 'bold' : 'normal';
-      }
-    });
-  }
-};
-
-ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin,boldLegendPlugin);
+ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin);
 
 
 function PieChart({testCounts}) {
@@ -138,7 +124,9 @@ function PieChart({testCounts}) {
                         text: label,
                         fillStyle: data.datasets[0].backgroundColor[i],
                         hidden: hidden,
-                        index: i
+                        index: i,
+                        fontColor: 'black',
+                        fontStyle: i === selectedLegendIndex ? 'bold' : 'normal',
                       };
                     });
                   }
@@ -156,20 +144,17 @@ function PieChart({testCounts}) {
                   meta.data.forEach((_, i) => {
                     chart.getDatasetMeta(0).data[i].hidden = false;
                   });
-                  chart.options.plugins.legend.selectedIndex = null;
-                  setSelectedLegendIndex(null);
+                  setSelectedLegendIndex(null); // Reset selection
                 } else {
                   meta.data.forEach((_, i) => {
                     chart.getDatasetMeta(0).data[i].hidden = i !== index;
                   });
-                  chart.options.plugins.legend.selectedIndex = index;
-                  setSelectedLegendIndex(index);
+                  setSelectedLegendIndex(index); // Set selected index
                 }
+
                 chart.update();
-              },
-              selectedIndex: selectedLegendIndex // Custom option for our plugin
-            }
-            ,
+              }
+            },
             tooltip: {
               callbacks: {
                 label: function (context) {
