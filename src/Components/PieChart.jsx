@@ -29,7 +29,7 @@ const centerTextPlugin = {
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`${label}: ${value}`, width/2, height/2+18);
+      ctx.fillText(`${label}: ${value}`, width/2, height/2+25);
       ctx.restore();
     }
   }
@@ -40,6 +40,8 @@ ChartJs.register(ArcElement, Tooltip, Legend,centerTextPlugin);
 
 
 function PieChart({testCounts}) {
+  const [selectedLegendIndex, setSelectedLegendIndex] = useState(null);
+
   const testCaseData = [
     { name: "Total", key: "total", icon: <FaListAlt />, color: "white" },
     { name: "Passed", key: "passed", icon: <SiTicktick />, color: "#28a745" },
@@ -100,61 +102,79 @@ function PieChart({testCounts}) {
         <Pie
           data={dashBoardPieData}
           options={{
-  plugins: {
-    legend: {
-      position: 'top',
-      align: 'center',
-      fullSize: false,
-      labels: {
-        color: 'black',
-        boxWidth: 20,
-        padding: 10,
-        usePointStyle: true,
-      },
-      // 👇 Override default click
-      onClick: (e, legendItem, legend) => {
-        const chart = legend.chart;
-        const index = legendItem.index;
-        const meta = chart.getDatasetMeta(0);
+          plugins: {
+            legend: {
+              position: 'top',
+              align: 'center',
+              fullSize: false,
+              labels: {
+                color: 'black',
+                boxWidth: 20,
+                padding: 10,
+                usePointStyle: true,
+                generateLabels: (chart) => {
+                  const data = chart.data;
+                  if (data.labels.length && data.datasets.length) {
+                    return data.labels.map((label, i) => {
+                      const meta = chart.getDatasetMeta(0);
+                      const hidden = meta.data[i] && meta.data[i].hidden;
 
-        // Count how many are currently hidden
-        const visibleCount = meta.data.filter((_, i) => !meta.data[i].hidden).length;
+                      return {
+                        text: label,
+                        fillStyle: data.datasets[0].backgroundColor[i],
+                        hidden: hidden,
+                        index: i,
+                        fontColor: 'black',
+                        fontStyle: i === selectedLegendIndex ? 'bold' : 'normal',
+                      };
+                    });
+                  }
+                  return [];
+                }
+              },
+              onClick: (e, legendItem, legend) => {
+                const chart = legend.chart;
+                const index = legendItem.index;
+                const meta = chart.getDatasetMeta(0);
 
-        // If only one is visible, reset (show all)
-        if (visibleCount === 1 && !meta.data[index].hidden) {
-          meta.data.forEach((_, i) => {
-            chart.getDatasetMeta(0).data[i].hidden = false;
-          });
-        } else {
-          // Hide all except selected
-          meta.data.forEach((_, i) => {
-            chart.getDatasetMeta(0).data[i].hidden = i !== index;
-          });
-        }
+                const visibleCount = meta.data.filter((_, i) => !meta.data[i].hidden).length;
 
-        chart.update();
-      }
-    },
-    tooltip: {
-      callbacks: {
-        label: function (context) {
-          const label = context.label || '';
-          const value = context.raw;
-          return `${label}: ${value}`;
-        }
-      }
-    }
-  },
-  layout: {
-    padding: {
-      top: 10,
-    },
-  },
-  responsive: true,
-  maintainAspectRatio: false,
-}}
+                if (visibleCount === 1 && !meta.data[index].hidden) {
+                  meta.data.forEach((_, i) => {
+                    chart.getDatasetMeta(0).data[i].hidden = false;
+                  });
+                  setSelectedLegendIndex(null); // Reset selection
+                } else {
+                  meta.data.forEach((_, i) => {
+                    chart.getDatasetMeta(0).data[i].hidden = i !== index;
+                  });
+                  setSelectedLegendIndex(index); // Set selected index
+                }
 
-        />
+                chart.update();
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const label = context.label || '';
+                  const value = context.raw;
+                  return `${label}: ${value}`;
+                }
+              }
+            }
+          },
+          layout: {
+            padding: {
+              top: 10,
+            },
+          },
+          
+          responsive: true,
+          maintainAspectRatio: false,
+        }}
+
+      />
       </div>
 
       {/* Carousel Slides */}
