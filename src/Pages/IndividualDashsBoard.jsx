@@ -18,7 +18,7 @@ ChartJs.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 function IndividualDashBoard() {
   
   const location = useLocation();
-  const filename = location.state?.fileName ;
+ 
   const navigate = useNavigate();
   const [chartName, setChartName] = useState("Bar");
 
@@ -61,14 +61,24 @@ function IndividualDashBoard() {
     async function fetchParsedCounts() {
       const loadingToastId = toast.loading("Loading Dashboard...");
       try {
-        const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?filename=${fileName}`);
-    
+        // const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?filename=${fileName}`);
+                // const fileName = 'sampleTRXFile.txt';
+                const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
+                // const url = 'http://localhost:7071/api/individualCall'; // Use local URL for testing
+
+                const res = await fetch(url, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ filename: fileName })
+                });
         if (!res.ok) {
           throw new Error("Failed to parse TRX");
         }
-        const parsedCounts = res;
+        const parsedCounts = await res.json();
         console.log(res)
-        console.log(res.json())
+        console.log(parsedCounts)
         setTestCounts(parsedCounts);
         toast.dismiss(loadingToastId);  // Dismiss loading toast
         toast.success("Dashboard loaded!" ,{autoClose : 1000});
