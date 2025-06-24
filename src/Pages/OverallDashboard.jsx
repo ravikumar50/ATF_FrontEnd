@@ -105,7 +105,7 @@ function OverallDashboard() {
     <>
     <HomeLayout>
       <div className="flex items-center justify-center">
-        <div className="pt-5 flex flex-col items-center gap-3 text-white px-4 pb-20">
+        <div className="pt-3 flex flex-col items-center gap-3 text-white px-4">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-center text-3xl font-semibold text-yellow-500">
               Dashboard : 
@@ -127,10 +127,11 @@ function OverallDashboard() {
                 </div>
               </div>
             </div>
+            <button onClick={handleChartNameChange} className="bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-md cursor-pointer text-white px-3">
+              Click here to see {chartName=="Pie" ? "Bar" : "Pie"} chart
+            </button>
         </div>  
-        <button onClick={handleChartNameChange} className="bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-md cursor-pointer text-white px-3">
-            Click here to see {chartName=="Pie" ? "Bar" : "Pie"} chart
-        </button>
+        
       </div>
     </HomeLayout>
     <ToastContainer position="top-center" theme="dark" />

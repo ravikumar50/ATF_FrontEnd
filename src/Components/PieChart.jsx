@@ -179,7 +179,7 @@ function PieChart({testCounts}) {
       </div>
 
       {/* Carousel Slides */}
-      <div className="carousel w-full mt-10 overflow-visible">
+      <div className="carousel w-full mt-5 overflow-visible">
         {groupedSlides.map((group, index) => (
           <CarouselSlide
             key={index}

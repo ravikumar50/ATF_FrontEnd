@@ -65,7 +65,7 @@ function BarChart({ testCounts }) {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Bar Chart */}
-      <div className="h-75 w-full max-w-[700px] relative mb-10">
+      <div className="h-65 w-full max-w-[700px] relative mb-10">
         <Bar
           data={dashBoardBarData}
           className="absolute h-80 bottom-0 w-full"
@@ -82,7 +82,7 @@ function BarChart({ testCounts }) {
       </div>
 
       {/* Carousel of Cards with arrows */}
-      <div className="carousel w-full overflow-visible">
+      <div className="carousel w-full mt-5 overflow-visible">
         {groupedSlides.map((group, index) => (
           <CarouselSlide
             key={index}
