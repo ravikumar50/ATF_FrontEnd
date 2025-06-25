@@ -20,7 +20,7 @@ function IndividualDashBoard() {
   const location = useLocation();
  
   const navigate = useNavigate();
-  const [chartName, setChartName] = useState("Bar");
+  const [chartName, setChartName] = useState("Pie");
 
   const [testCounts, setTestCounts] = useState({
     passed: 0,
