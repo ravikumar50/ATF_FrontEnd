@@ -24,7 +24,7 @@ function HomePage(){
                                 Upload Files
                             </button>
                         </Link>
-                        <Link to={"/files"}>
+                        <Link to={"/project"}>
                             <button className="border border-yellow-50 px-5 py-3 rounded-md font-semibold text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
                                 View Files
                             </button>

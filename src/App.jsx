@@ -12,6 +12,7 @@ import Files from './Pages/Files';
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
 import AuthSync from './Components/Auth/AuthSync';
+import SelectProject from './Pages/SelectProject';
 
 
 function App() {
@@ -88,6 +89,15 @@ function App() {
           element={
             // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Logout />
+            // </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route
+          path="/project"
+          element={
+            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <SelectProject />
             // </MsalAuthenticationTemplate>
           }
         />
