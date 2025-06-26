@@ -60,7 +60,7 @@ function OverallDashboard() {
         // const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?fileName=${fileName}`);
                 // const fileName = 'sampleTRXFile.txt';
                 const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
-                console.log(fileName)
+                
                 // const url = 'http://localhost:7071/api/individualCall';
                  const res = await fetch(url, {
                 method: 'POST',
@@ -73,8 +73,6 @@ function OverallDashboard() {
           throw new Error("Failed to parse TRX");
         }
         const parsedCounts = await res.json();
-        console.log(res)
-        console.log(parsedCounts)
         setTestCounts(parsedCounts);
         toast.dismiss(loadingToastId);  // Dismiss loading toast
         toast.success("Dashboard loaded!" ,{autoClose : 1000});

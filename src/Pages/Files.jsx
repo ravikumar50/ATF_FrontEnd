@@ -35,13 +35,27 @@ function Files() {
 
   return (
     <HomeLayout>
-      <div className="flex flex-col items-center justify-center h-[90vh] gap-6">
-        <Search updateSearchTerm={setSearchTerm} />
-        <FileList
-          files={filteredFiles}
-          loading={loading}
-          fetchFiles={fetchFiles}
-        />
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl shadow-2xl bg-gray-700">
+          <h2 className="text-2xl flex items-center justify-center font-bold">Available Files</h2>
+          <div className="flex items-center justify-between">
+            <Search updateSearchTerm={setSearchTerm} />   
+            <button
+              onClick={fetchFiles}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm w-25 h-9"
+              disabled={loading}
+            >
+              {loading ? "Refreshing..." : "Refresh"}
+            </button>
+          </div>
+          
+          
+          <FileList
+            files={filteredFiles}
+            loading={loading}
+            fetchFiles={fetchFiles}
+          />
+        </div>
       </div>
       <ToastContainer position="top-center" theme="dark" />
     </HomeLayout>

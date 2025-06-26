@@ -5,18 +5,7 @@ function FileList({ files, loading, fetchFiles }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl shadow-2xl bg-gray-700">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-2xl font-bold">Available Files</h2>
-        <button
-          onClick={fetchFiles}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm"
-          disabled={loading}
-        >
-          {loading ? "Refreshing..." : "Refresh"}
-        </button>
-      </div>
-
+    <>
       <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
         {files.length === 0 && !loading ? (
           <p className="text-center text-gray-300">No files available.</p>
@@ -84,7 +73,7 @@ function FileList({ files, loading, fetchFiles }) {
           ))
         )}
       </ul>
-    </div>
+    </>
   );
 }
 
