@@ -26,9 +26,17 @@ function ProjectDetails() {
   try {
     const formData = new FormData();
     formData.append('containerName', projectName);
-    const res = await fetch('https://functionapptry.azurewebsites.net/api/listBlob', formData);
+     const url = "https://functionapptry.azurewebsites.net/api/listBlob";
+    // const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
+    
+
+    const res = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
     const data = await res.json();
     setFiles(data);
+
 
     
     toast.dismiss(loadingToastId);
@@ -84,6 +92,7 @@ function ProjectDetails() {
             files={filteredFiles}
             loading={loading}
             fetchFiles={fetchFiles}
+            projectName={projectName} 
           />
         </div>
       </div>

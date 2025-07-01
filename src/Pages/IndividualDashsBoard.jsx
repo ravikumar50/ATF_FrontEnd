@@ -42,7 +42,7 @@ function IndividualDashBoard() {
   });
 
   
-  const {fileName} = location.state;
+  const {fileName,containerName} = location.state;
 
 
   
@@ -61,17 +61,15 @@ function IndividualDashBoard() {
     async function fetchParsedCounts() {
       const loadingToastId = toast.loading("Loading Dashboard...");
       try {
-        // const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?fileName=${fileName}`);
-                // const fileName = 'sampleTRXFile.txt';
-                const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
-                console.log(fileName)
-                // const url = 'http://localhost:7071/api/individualCall';
-                 const res = await fetch(url, {
+                const formData = new FormData();
+                formData.append('fileName', fileName);
+                formData.append('containerName', containerName);
+               // const url = 'http://localhost:7071/api/individualCall';
+                 const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
+                
+                const res = await fetch(url, {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ fileName: fileName }),
+                body: formData,
               });
         if (!res.ok) {
           throw new Error("Failed to parse TRX");
