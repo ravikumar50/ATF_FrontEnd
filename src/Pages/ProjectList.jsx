@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function ProjectList({ files, loading, fetchFiles }) {
+function ProjectList({ files, loading, fetchFiles, projectName }) {
   const navigate = useNavigate();
 
   return (
@@ -29,7 +29,7 @@ function ProjectList({ files, loading, fetchFiles }) {
                   onClick={() => {
                     toast.promise(
                       new Promise(resolve => {
-                        navigate("/individualDashboard", { state: { fileName: file.name } });
+                        navigate("/individualDashboard", { state: { fileName: file.name, containerName: projectName } });
                         resolve();
                       }),
                       {
