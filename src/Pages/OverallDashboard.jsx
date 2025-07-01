@@ -108,7 +108,7 @@ function OverallDashboard() {
             <h1 className="text-center text-3xl font-semibold text-yellow-500">
               Dashboard : 
             </h1>
-            <h2 className="text-center text-3xl text-gray-200 font-semibold">
+            <h2 className="text-center text-3xl text-gray-800 font-semibold">
               {fileName}
             </h2>
           </div>
@@ -116,7 +116,7 @@ function OverallDashboard() {
           
             <div className="flex flex-col gap-5 m-auto mx-10">
               <div className="flex justify-center items-center w-full">
-                <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-100 rounded-md w-160 max-w-3xl">
+                <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-100 hover:shadow-gray-400 rounded-md w-160 max-w-3xl">
                   {
                     chartName=="Pie" ? <PieChart testCounts={testCounts} /> : 
                       <BarChart testCounts={testCounts}  />                 

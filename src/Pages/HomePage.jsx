@@ -1,8 +1,24 @@
 
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import HomeLayout from "../Layouts/Homelayout"
 import HomePageImage from "../assets/Images/Social_media_image_upload-removebg-preview.png"
 function HomePage(){
+
+    const navigate = useNavigate();
+
+    async function onViewProjectsClick(){
+        const formData = new FormData();
+        formData.append('email',"ravikumarsingh5256@gmail.com");
+        const response = await fetch("https://functionapptry.azurewebsites.net/api/listProjects", {
+            method: "POST",
+            body: formData
+        });
+
+        if(response.status==200){
+            const data = await response.body.json();
+            navigate("/allProjects", { state: { projects: data } });
+        }
+    }
     return(
         <HomeLayout>
             <div className="pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh]">
@@ -24,9 +40,9 @@ function HomePage(){
                                 Upload Files
                             </button>
                         </Link>
-                        <Link to={"/project"}>
+                        <Link to={"/allProjects"}>
                             <button className="border border-yellow-50 px-5 py-3 rounded-md font-semibold text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
-                                View Files
+                                View Projects
                             </button>
                         </Link>
                     </div>

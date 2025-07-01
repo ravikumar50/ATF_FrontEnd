@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function FileList({ files, loading, fetchFiles }) {
+function ProjectList({ files, loading, fetchFiles }) {
   const navigate = useNavigate();
 
   return (
     <>
       <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
         {files.length === 0 && !loading ? (
-          <p className="text-center text-gray-300">No files available.</p>
+          <p className="text-center text-gray-800">No files available.</p>
         ) : (
           files.map(file => (
-            <li key={file.name} className="flex justify-between items-center bg-gray-800 px-4 py-2 rounded-md">
+            <li key={file.name} className="flex justify-between items-center bg-gray-100 px-4 py-2 border border-gray-600 rounded-md focus-within:border-blue-500 transition-colors duration-200 text-gray-800 font-medium">
               <div className="w-1/2">
                 <span className="truncate">{file.name}</span>
               </div>
@@ -77,4 +77,4 @@ function FileList({ files, loading, fetchFiles }) {
   );
 }
 
-export default FileList;
+export default ProjectList;

@@ -7,12 +7,14 @@ import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import OverallDashboard from './Pages/OverallDashboard';
 import About from './Pages/About';
-import Files from './Pages/Files';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
 import AuthSync from './Components/Auth/AuthSync';
-import SelectProject from './Pages/SelectProject';
+import ProjectCard from './Components/ProjectCard';
+import AllProjects from './Pages/AllProjects';
+import ProjectDetails from './Pages/ProjectDetails';
+import CreateProject from './Pages/CreateProject';
 
 
 function App() {
@@ -27,15 +29,6 @@ function App() {
         //   <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <HomePage />
         //   </MsalAuthenticationTemplate>
-          }
-        />
-
-        <Route
-          path="/files"
-          element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <Files />
-            // </MsalAuthenticationTemplate>
           }
         />
 
@@ -93,11 +86,31 @@ function App() {
           }
         />
 
+        
+
         <Route
-          path="/project"
+          path="/allProjects"
           element={
             // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <SelectProject />
+              <AllProjects />
+            // </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route
+          path="/projectDetails"
+          element={
+            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <ProjectDetails />
+            // </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route
+          path="/createProject"
+          element={
+            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <CreateProject />
             // </MsalAuthenticationTemplate>
           }
         />
