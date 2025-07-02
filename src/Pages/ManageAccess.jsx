@@ -6,7 +6,8 @@ function ManageAccess() {
   const [people, setPeople] = useState([]);
 
   const fetchAccessDetails = async () => {
-    const url = "http://localhost:7071/api/accessDetails"; // or your deployed one
+    // const url = "http://localhost:7071/api/accessDetails"; // or your deployed one
+    const url = "https://functionapptry.azurewebsites.net/api/accessDetails"; // Use 
     const res = await fetch(url, {
       method: "GET",
       headers: {
