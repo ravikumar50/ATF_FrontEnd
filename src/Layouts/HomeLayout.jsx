@@ -18,9 +18,9 @@ function HomeLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b1120] text-white">
+    <div className="h-[100vh] flex flex-col text-white">
       {/* Navbar */}
-      <nav className="	bg-black-200 shadow-lg">
+      <nav className="bg-[#0b1120] shadow-lg">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold text-white">
             ATF Portal
@@ -28,7 +28,7 @@ function HomeLayout({ children }) {
 
           <div className="space-x-6 font-bold text-sm text-white">
             <Link to="/" className="hover:text-[#00BBFF]">Home</Link>
-            <Link to="/files" className="hover:text-[#00BBFF]">View Projects</Link>
+            <Link to="/allProjects" className="hover:text-[#00BBFF]">View Projects</Link>
             {isAuthenticated && (
               <button
                 onClick={handleLogout}
