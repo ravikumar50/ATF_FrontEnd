@@ -17,7 +17,7 @@ function ProjectDetails() {
   setLoading(true);
 
   
-  const loadingToastId = toast.info("Project is loading...", {
+  const loadingToastId = toast.info(`${projectName} is loading...`, {
     position: "top-right",
     autoClose: false, // Keep it open until manually dismissed
     theme: "dark",
@@ -52,7 +52,7 @@ function ProjectDetails() {
 
     
     toast.dismiss(loadingToastId);
-    toast.error("Failed to load project", {
+    toast.error(`Failed to load ${projectName}`, {
       position: "top-right",
       autoClose: 2000,
       theme: "dark",
