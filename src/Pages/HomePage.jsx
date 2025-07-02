@@ -16,15 +16,10 @@ function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link to="/upload">
-              <button className="bg-black hover:bg-[#ADD8E6] hover:text-[#00BBFF] text-white px-6 py-2 rounded-md text-sm font-medium transition-all">
-                Upload Files
-              </button>
-            </Link>
-
+           
             <Link to="/files">
-              <button className="border border-black text-black hover:bg-[#ADD8E6] hover:text-[#00BBFF] px-6 py-2 rounded-md text-sm font-medium transition-all">
-                View Files
+              <button className="bg-[#00BBFF] text-white hover:bg-[#ADD8E6] hover:text-[#00BBFF] px-6 py-2 rounded-md text-sm font-medium transition-all">
+                View Projects
               </button>
             </Link>
           </div>

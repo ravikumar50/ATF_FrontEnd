@@ -28,9 +28,7 @@ function HomeLayout({ children }) {
 
           <div className="space-x-6 font-bold text-sm text-white">
             <Link to="/" className="hover:text-[#00BBFF]">Home</Link>
-            <Link to="/upload" className="hover:text-[#00BBFF]">Upload</Link>
-            <Link to="/overallDashboard" className="hover:text-[#00BBFF]">Dashboard</Link>
-            <Link to="/files" className="hover:text-[#00BBFF]">View Files</Link>
+            <Link to="/files" className="hover:text-[#00BBFF]">View Projects</Link>
             {isAuthenticated && (
               <button
                 onClick={handleLogout}
