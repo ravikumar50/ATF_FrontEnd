@@ -26,8 +26,8 @@ function ProjectDetails() {
   try {
     const formData = new FormData();
     formData.append('containerName', projectName);
-    // const url = "https://functionapptry.azurewebsites.net/api/listBlob";
-     const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
+     const url = "https://functionapptry.azurewebsites.net/api/listBlob";
+    // const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
     
 
     const res = await fetch(url, {
