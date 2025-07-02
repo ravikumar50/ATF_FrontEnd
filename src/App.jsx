@@ -15,6 +15,9 @@ import ProjectCard from './Components/ProjectCard';
 import AllProjects from './Pages/AllProjects';
 import ProjectDetails from './Pages/ProjectDetails';
 import CreateProject from './Pages/CreateProject';
+import ManageAcess from './Pages/ManageAccess';
+import UserAccessDetails from './Components/PersonCard';
+import ManageAccess from './Pages/ManageAccess';
 
 
 function App() {
@@ -114,6 +117,18 @@ function App() {
              </MsalAuthenticationTemplate>
           }
         />
+
+        <Route
+          path="/access"
+          element={
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <ManageAccess />
+             </MsalAuthenticationTemplate>
+          }
+        />
+
+        
+
 
       </Routes>
     </>

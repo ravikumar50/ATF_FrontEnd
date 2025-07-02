@@ -3,8 +3,8 @@ import HomeLayout from "../Layouts/Homelayout";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from "react-router-dom"; // ✅ import location
-import Search from "../Search/Search";
 import ProjectList from "./ProjectList";
+import SearchBar from "../Search/SearchBar";
 
 function ProjectDetails() {
   const [files, setFiles] = useState([]);
@@ -26,8 +26,8 @@ function ProjectDetails() {
   try {
     const formData = new FormData();
     formData.append('containerName', projectName);
-     const url = "https://functionapptry.azurewebsites.net/api/listBlob";
-    // const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
+    // const url = "https://functionapptry.azurewebsites.net/api/listBlob";
+     const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
     
 
     const res = await fetch(url, {
@@ -79,7 +79,7 @@ function ProjectDetails() {
           <h2 className="text-2xl flex items-center justify-center font-bold text-gray-800">Available Files</h2>
           <div className="flex justify-between items-center w-full gap-4">
             
-            <Search updateSearchTerm={setSearchTerm} />   
+            <SearchBar updateSearchTerm={setSearchTerm} />   
             <button
               onClick={fetchFiles}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm h-10 w-34"
