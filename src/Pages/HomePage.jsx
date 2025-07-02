@@ -6,19 +6,7 @@ function HomePage(){
 
     const navigate = useNavigate();
 
-    async function onViewProjectsClick(){
-        const formData = new FormData();
-        formData.append('email',"ravikumarsingh5256@gmail.com");
-        const response = await fetch("https://functionapptry.azurewebsites.net/api/listProjects", {
-            method: "POST",
-            body: formData
-        });
-
-        if(response.status==200){
-            const data = await response.body.json();
-            navigate("/allProjects", { state: { projects: data } });
-        }
-    }
+    
     return(
         <HomeLayout>
             <div className="pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh]">

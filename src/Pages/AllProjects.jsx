@@ -5,6 +5,7 @@ import ProjectCard from "../Components/ProjectCard";
 import Search from "../Search/Search";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import {useMsal } from "@azure/msal-react";
 
 
 
@@ -13,40 +14,32 @@ function AllProjects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
+  const {account} = useMsal();
+  const email = account[0]?.username || "anshgusain08@gmail.com";
+  
+  
 
 
   const fetchProjects = async () => {
     
     
     setLoading(true);
-    const loadingToastId = toast.info("Project is loading...", {
-      position: "top-right",
-      autoClose: false, // Keep it open until manually dismissed
-      theme: "dark",
-    });
 
     try{
       const formData = new FormData();
-      formData.append('email',"ravikumarsingh5256@gmail.com");
+      formData.append('email',email);
       const url = "https://functionapptry.azurewebsites.net/api/listProjects";
       //const url = "http://localhost:7071/api/listProjects";
       const response = await fetch(url, {
           method: "POST",
           body: formData
       });
+
+      console.log(email);
       
 
       
-      toast.dismiss(loadingToastId);
-      
-      
-      toast.success("Projects loaded successfully!", {
-        position: "top-right",
-        autoClose: 2000,
-        theme: "dark",
-      });
       const data = await response.json();
-      console.log(data);
       setProjects(data);
       
 
