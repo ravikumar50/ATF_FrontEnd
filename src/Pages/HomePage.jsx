@@ -18,8 +18,14 @@ function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
            
             <Link to="/allProjects">
-              <button className="bg-[#00BBFF] text-white hover:bg-[#ADD8E6] hover:text-[#00BBFF] px-6 py-2 rounded-md text-sm font-medium transition-all">
+              <button className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium transition-all">
                 View Projects
+              </button>
+            </Link>
+
+            <Link to="/access">
+              <button className="bg-blue-500 text-white hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-all">
+                Manage Access
               </button>
             </Link>
           </div>
