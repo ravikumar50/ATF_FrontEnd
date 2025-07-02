@@ -15,7 +15,8 @@ function AllProjects() {
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const {account} = useMsal();
-  const email = account[0]?.username || "anshgusain08@gmail.com";
+  console.log;("Account details:", account);
+  const email = "anshgusain08@gmail.com";
   
   
 
