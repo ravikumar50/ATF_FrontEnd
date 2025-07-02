@@ -1,7 +1,29 @@
 import { Link } from "react-router-dom";
 import HomeLayout from "../Layouts/Homelayout";
+import { useMsal, useAccount } from "@azure/msal-react";
+import { useEffect, useState } from "react";
 
 function HomePage() {
+
+  const { accounts } = useMsal();
+  const email = useAccount(accounts[0] || {}).username; 
+  const formData = new FormData();
+  formData.append('email', email);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const fetchAdminStatus = async () => {
+
+    const res = fetch("https://functionapptry.azurewebsites.net/api/isAdmin",{
+      method: "POST",
+      body: formData,
+    })
+    if((await res).status === 200)  setIsAdmin(true);
+  }
+
+  useEffect(() => {
+    fetchAdminStatus();
+  }, []);
+
   return (
     <HomeLayout>
       <div className="h-[100vh] bg-[#EAEFEF] flex flex-col items-center justify-center text-black px-6">
@@ -23,11 +45,11 @@ function HomePage() {
               </button>
             </Link>
 
-            <Link to="/access">
+            {isAdmin && <Link to="/access">
               <button className="bg-blue-500 text-white hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-all">
                 Manage Access
               </button>
-            </Link>
+            </Link>}
           </div>
         </div>
 
