@@ -5,7 +5,7 @@ import ProjectCard from "../Components/ProjectCard";
 import Search from "../Search/Search";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import {useMsal } from "@azure/msal-react";
+import { useMsal, useAccount } from "@azure/msal-react";
 
 
 
@@ -14,9 +14,9 @@ function AllProjects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
-  const {account} = useMsal();
-  console.log;("Account details:", account);
-  const email = "anshgusain08@gmail.com";
+  const { accounts } = useMsal();
+  const email = useAccount(accounts[0] || {}).username; 
+
   
   
 
@@ -36,7 +36,7 @@ function AllProjects() {
           body: formData
       });
 
-      console.log(email);
+      
       
 
       
