@@ -7,12 +7,14 @@ import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import OverallDashboard from './Pages/OverallDashboard';
 import About from './Pages/About';
-import Files from './Pages/Files';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
 import AuthSync from './Components/Auth/AuthSync';
-import SelectProject from './Pages/SelectProject';
+import ProjectCard from './Components/ProjectCard';
+import AllProjects from './Pages/AllProjects';
+import ProjectDetails from './Pages/ProjectDetails';
+import CreateProject from './Pages/CreateProject';
 
 
 function App() {
@@ -24,81 +26,92 @@ function App() {
         <Route
           path="/"
           element={
-        //   <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+           <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <HomePage />
-        //   </MsalAuthenticationTemplate>
-          }
-        />
-
-        <Route
-          path="/files"
-          element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <Files />
-            // </MsalAuthenticationTemplate>
+           </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/upload"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Upload />
-            // </MsalAuthenticationTemplate>
+             </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/individualDashBoard"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <IndividualDashBoard />
-          //  </MsalAuthenticationTemplate>
+            </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/overallDashboard"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <OverallDashboard />
-            // </MsalAuthenticationTemplate>
+             </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/contact"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Contact />
-            // </MsalAuthenticationTemplate>
+             </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/about"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <About />
-            // </MsalAuthenticationTemplate>
+             </MsalAuthenticationTemplate>
           }
         />
 
         <Route
           path="/logout"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Logout />
-            // </MsalAuthenticationTemplate>
+             </MsalAuthenticationTemplate>
+          }
+        />
+
+        
+
+        <Route
+          path="/allProjects"
+          element={
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <AllProjects />
+             </MsalAuthenticationTemplate>
           }
         />
 
         <Route
-          path="/project"
+          path="/projectDetails"
           element={
-            // <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <SelectProject />
-            // </MsalAuthenticationTemplate>
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <ProjectDetails />
+             </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route
+          path="/createProject"
+          element={
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <CreateProject />
+             </MsalAuthenticationTemplate>
           }
         />
 

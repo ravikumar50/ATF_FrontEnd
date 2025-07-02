@@ -42,7 +42,7 @@ function IndividualDashBoard() {
   });
 
   
-  const {fileName} = location.state;
+  const {fileName,containerName} = location.state;
 
 
   
@@ -61,17 +61,15 @@ function IndividualDashBoard() {
     async function fetchParsedCounts() {
       const loadingToastId = toast.loading("Loading Dashboard...");
       try {
-        // const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?fileName=${fileName}`);
-                // const fileName = 'sampleTRXFile.txt';
-                const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
-                console.log(fileName)
-                // const url = 'http://localhost:7071/api/individualCall';
-                 const res = await fetch(url, {
+                const formData = new FormData();
+                formData.append('fileName', fileName);
+                formData.append('containerName', containerName);
+               // const url = 'http://localhost:7071/api/individualCall';
+                 const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
+                
+                const res = await fetch(url, {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ fileName: fileName }),
+                body: formData,
               });
         if (!res.ok) {
           throw new Error("Failed to parse TRX");
@@ -114,7 +112,7 @@ function IndividualDashBoard() {
             <h1 className="text-center text-3xl font-semibold text-yellow-500">
               Dashboard : 
             </h1>
-            <h2 className="text-center text-3xl text-gray-200 font-semibold">
+            <h2 className="text-center text-3xl text-gray-800 font-semibold">
               {fileName}
             </h2>
           </div>
@@ -122,7 +120,7 @@ function IndividualDashBoard() {
           
             <div className="flex flex-col gap-5 m-auto mx-10">
               <div className="flex justify-center items-center w-full">
-                <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-100 rounded-md w-160 max-w-3xl">
+                <div className="flex flex-col items-center justify-center gap-5 p-5 shadow-2xl bg-gray-100 hover:shadow-gray-400 rounded-md w-160 max-w-3xl">
                   {
                     chartName=="Pie" ? <PieChart testCounts={testCounts} /> : 
                       <BarChart testCounts={testCounts}  />                 

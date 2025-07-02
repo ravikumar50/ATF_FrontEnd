@@ -58,8 +58,8 @@ function Upload() {
     return (
         <>
         <HomeLayout>
-            <div className="flex items-center justify-center h-[90vh]">
-                <div className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-2xl bg-gray-700">
+            <div className="flex items-center justify-center h-[100vh]">
+                <div className="flex flex-col justify-center gap-3 text-gray-800 w-96  bg-white shadow-lg rounded-lg p-4 hover:shadow-gray-400 transition-shadow duration-300 cursor-pointer space-x-4">
                     <h1 className="text-center text-2xl font-bold ">Upload File</h1>
 
                     <div className="flex flex-col gap-1">
@@ -74,7 +74,7 @@ function Upload() {
                         />
                     </div>
 
-                    <button onClick={handleUpload} className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-lg cursor-pointer text-white">
+                    <button onClick={handleUpload} className="w-full bg-blue-600 hover:bg-blue-500 transition-all ease-in-out duration-300 mt-2 py-2 rounded-md font-semibold text-lg cursor-pointer text-white">
                         Upload File
                     </button>
                 </div>
