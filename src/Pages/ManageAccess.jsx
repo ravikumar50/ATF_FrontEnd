@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
 import PersonCard from "../Components/PersonCard";
 
+
 function ManageAccess() {
   const [people, setPeople] = useState([]);
+  
 
   const fetchAccessDetails = async () => {
     // const url = "http://localhost:7071/api/accessDetails"; // or your deployed one
-    const url = "https://functionapptry.azurewebsites.net/api/accessDetails"; // Use 
+     const url = "https://functionapptry.azurewebsites.net/api/accessDetails"; // Use 
     const res = await fetch(url, {
       method: "GET",
       headers: {
