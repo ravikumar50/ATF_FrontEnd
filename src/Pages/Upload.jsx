@@ -34,7 +34,9 @@ function Upload() {
         const toastId = toast.loading("Uploading file...");
 
         try {
-            await axios.post("https://functionapptry.azurewebsites.net/api/uploadBlob", formData);
+            // const url = "https://functionapptry.azurewebsites.net/api/uploadBlob"; 
+            const url = "http://localhost:7071/api/uploadBlob"; // Use 
+            await axios.post(url, formData);
 
             toast.update(toastId, {
                 render: "File uploaded successfully!",
