@@ -18,6 +18,7 @@ import CreateProject from './Pages/CreateProject';
 import ManageAcess from './Pages/ManageAccess';
 import UserAccessDetails from './Components/PersonCard';
 import ManageAccess from './Pages/ManageAccess';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -131,6 +132,7 @@ function App() {
 
 
       </Routes>
+      <ToastContainer position="top-right" autoClose={1500} />
     </>
   );
 }
