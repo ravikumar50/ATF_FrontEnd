@@ -134,7 +134,7 @@ function AllProjects() {
 
           <button
             onClick={fetchProjects}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm h-10 w-34"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-md h-10 w-34"
             disabled={loading}
           >
             {loading ? "Refreshing..." : "Refresh"}
