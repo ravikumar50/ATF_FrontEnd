@@ -8,7 +8,8 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
     const toastId = toast.loading("Deleting file...", { position: "top-right" });
 
     try {
-      const url = "http://localhost:7071/api/deleteBlob";
+      // const url = "http://localhost:7071/api/deleteBlob";
+      const url = "https://functionapptry.azurewebsites.net/api/deleteBlob"; // 
       const formData = new FormData();
       formData.append("fileName", fileName);
       formData.append("containerName", containerName);
