@@ -4,14 +4,58 @@ import { toast } from "react-toastify";
 function ProjectList({ files, loading, fetchFiles, projectName }) {
   const navigate = useNavigate();
 
+  async function deleteFile(fileName, containerName) {
+    const toastId = toast.loading("Deleting file...", { position: "top-right" });
+
+    try {
+      const url = "http://localhost:7071/api/deleteBlob";
+      const formData = new FormData();
+      formData.append("fileName", fileName);
+      formData.append("containerName", containerName);
+
+      const res = await fetch(url, {
+        method: "DELETE",
+        body: formData,
+      });
+
+      if (res.ok) {
+        toast.update(toastId, {
+          render: "File deleted successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+        fetchFiles(); // Refresh list
+      } else {
+        toast.update(toastId, {
+          render: "Failed to delete file",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast.update(toastId, {
+        render: "Error deleting file",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+      });
+    }
+  }
+
   return (
     <>
       <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
         {files.length === 0 && !loading ? (
           <p className="text-center text-gray-800">No files available.</p>
         ) : (
-          files.map(file => (
-            <li key={file.name} className="flex justify-between items-center bg-gray-100 px-4 py-2 border border-gray-600 rounded-md focus-within:border-blue-500 transition-colors duration-200 text-gray-800 font-medium">
+          files.map((file) => (
+            <li
+              key={file.name}
+              className="flex justify-between items-center bg-gray-100 px-4 py-2 border border-gray-600 rounded-md focus-within:border-blue-500 transition-colors duration-200 text-gray-800 font-medium"
+            >
               <div className="w-1/2">
                 <span className="truncate">{file.name}</span>
               </div>
@@ -28,14 +72,19 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                 <button
                   onClick={() => {
                     toast.promise(
-                      new Promise(resolve => {
-                        navigate("/individualDashboard", { state: { fileName: file.name, containerName: projectName } });
+                      new Promise((resolve) => {
+                        navigate("/individualDashboard", {
+                          state: {
+                            fileName: file.name,
+                            containerName: projectName,
+                          },
+                        });
                         resolve();
                       }),
                       {
                         pending: "Loading dashboard...",
                         success: "Dashboard loaded successfully",
-                        error: "Failed to load file"
+                        error: "Failed to load file",
                       },
                       { position: "top-right", autoClose: 2000 }
                     );
@@ -45,25 +94,7 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                   Dashboard
                 </button>
                 <button
-                  onClick={async () => {
-                    let toastId = toast.loading("Deleting file...", { position: "top-right" });
-
-                    try {
-                      const res = await fetch(
-                        `https://functionapptry.azurewebsites.net/api/deleteBlob?filename=${file.name}`,
-                        { method: "DELETE" }
-                      );
-                      if (res.ok) {
-                        toast.update(toastId, { render: "File deleted successfully", type: "success", isLoading: false, autoClose: 2000 });
-                        fetchFiles();
-                      } else {
-                        toast.update(toastId, { render: "Failed to delete file", type: "error", isLoading: false, autoClose: 2000 });
-                      }
-                    } catch (err) {
-                      toast.update(toastId, { render: "Error deleting file", type: "error", isLoading: false, autoClose: 2000 });
-                      console.error(err);
-                    }
-                  }}
+                  onClick={() => deleteFile(file.name, projectName)}
                   className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold"
                 >
                   Delete

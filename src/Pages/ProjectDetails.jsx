@@ -6,61 +6,103 @@ import { useLocation } from "react-router-dom"; // ✅ import location
 import ProjectList from "./ProjectList";
 import SearchBar from "../Search/SearchBar";
 
-function ProjectDetails() {
-  const [files, setFiles] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(false);
-  const location = useLocation(); // ✅ Get the route state
-  const projectName = location.state?.name;
+  function ProjectDetails() {
+    const [files, setFiles] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(false);
+    const location = useLocation(); // ✅ Get the route state
+    const projectName = location.state?.name;
 
-  const fetchFiles = async () => {
-  setLoading(true);
+    const fetchFiles = async () => {
+    setLoading(true);
 
-  
-  const loadingToastId = toast.info(`${projectName} is loading...`, {
-    position: "top-right",
-    autoClose: false, // Keep it open until manually dismissed
-    theme: "dark",
-  });
+    
+    const loadingToastId = toast.info(`${projectName} is loading...`, {
+      position: "top-right",
+      autoClose: false, // Keep it open until manually dismissed
+      theme: "dark",
+    });
 
-  try {
+    try {
+      const formData = new FormData();
+      formData.append('containerName', projectName);
+      const url = "https://functionapptry.azurewebsites.net/api/listBlob";
+      // const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
+      
+
+      const res = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      setFiles(data);
+
+
+      
+      toast.dismiss(loadingToastId);
+
+      
+      toast.success(`${projectName} loaded successfully!`, {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+    } catch (err) {
+      
+
+      
+      toast.dismiss(loadingToastId);
+      toast.error(`Failed to load ${projectName}`, {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  async function handleFileUpload(file) {
     const formData = new FormData();
+    formData.append('file', file);
+    console.log(projectName);
+    
     formData.append('containerName', projectName);
-     const url = "https://functionapptry.azurewebsites.net/api/listBlob";
-    // const url = "http://localhost:7071/api/listBlob"; // Use your local URL for testing
-    
 
-    const res = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    const data = await res.json();
-    setFiles(data);
-
-
-    
-    toast.dismiss(loadingToastId);
-
-    
-    toast.success(`${projectName} loaded successfully!`, {
+    const toastId = toast.loading("Uploading file...", {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: false,
       theme: "dark",
     });
-  } catch (err) {
-    
 
-    
-    toast.dismiss(loadingToastId);
-    toast.error(`Failed to load ${projectName}`, {
-      position: "top-right",
-      autoClose: 2000,
-      theme: "dark",
-    });
-  } finally {
-    setLoading(false);
+    try {
+     // const url = "https://functionapptry.azurewebsites.net/api/uploadBlob";
+       const url = "http://localhost:7071/api/uploadBlob"; // Use your local URL for testing
+      await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+
+      toast.update(toastId, {
+        render: "File uploaded successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+      
+      fetchFiles(); // Refresh the file list after upload
+    } catch (err) {
+      console.error(err);
+      toast.update(toastId, {
+        render: "Upload failed",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
   }
-};
+
+
 
 
 
@@ -77,16 +119,31 @@ function ProjectDetails() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl bg-white shadow-2xl hover:shadow-gray-400 transition-shadow duration-300 cursor-pointer">
           <h2 className="text-2xl flex items-center justify-center font-bold text-gray-800">Available Files</h2>
-          <div className="flex justify-between items-center w-full gap-4">
+          <div className="flex justify-between items-center w-full gap-2">
             
             <SearchBar updateSearchTerm={setSearchTerm} />   
             <button
               onClick={fetchFiles}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm h-10 w-34"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-2 rounded text-sm h-10 w-40"
               disabled={loading}
             >
               {loading ? "Refreshing..." : "Refresh"}
             </button>
+            <label className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded text-sm h-10 w-40 cursor-pointer text-center">
+              Upload File
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    handleFileUpload(file);
+                    e.target.value = null; // Reset input for reuploading same file
+                  }
+                }}
+              />
+            </label>
+
           </div>
           <ProjectList
             files={filteredFiles}
