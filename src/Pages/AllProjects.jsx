@@ -122,7 +122,7 @@ function AllProjects() {
 
   return(
     <HomeLayout>
-      <div className="flex flex-col items-center justify-center min-h-screen mt-5 mb-5">
+      <div className="flex flex-col items-center justify-center min-h-screen mt-5 mb-5 gap-3">
         <div>
           <h1 className="text-3xl text-gray-800 font-bold mb-6">All Projects</h1>
         </div>
@@ -149,11 +149,11 @@ function AllProjects() {
           </button>
         </div>
 
-        <div className="min-h-[460px] flex items-center justify-center w-full px-4">
+        <div className="min-h-[460px] flex justify-center w-full px-4">
           {filteredProject.length === 0 ? (
             <p className="text-balance text-xl text-gray-700 font-medium">No projects available.</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full">
               {filteredProject.map((project, index) => (
                 <ProjectCard 
                   name={project.name} 
