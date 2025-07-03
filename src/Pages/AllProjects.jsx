@@ -6,12 +6,19 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useMsal, useAccount } from "@azure/msal-react";
 import SearchBar from "../Search/SearchBar";
+import { X } from "lucide-react"; // Make sure to install lucide-react if not already installed
 
 function AllProjects() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newProjectDetails, setNewProjectDetails] = useState({
+    name: '',
+    description: ''
+  });
+  const [creating, setCreating] = useState(false);
   const { accounts } = useMsal();
   const email = useAccount(accounts[0] || {}).username; 
 
@@ -42,6 +49,69 @@ function AllProjects() {
     }
   }
 
+  const handleCreateProject = async () => {
+    if (!newProjectDetails.name || newProjectDetails.name.trim() === "" || 
+        !newProjectDetails.description || newProjectDetails.description.trim() === "") {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    setCreating(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('name', newProjectDetails.name);
+      formData.append('description', newProjectDetails.description);
+
+      toast.loading("Creating Project...", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+
+      const response = await fetch("https://functionapptry.azurewebsites.net/api/newProject", {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.status === 200) {
+        toast.dismiss();
+        toast.success("Project created successfully!", {
+          position: "top-right",
+          autoClose: 2000,
+          theme: "dark",
+        });
+        
+        // Reset form and close modal
+        setNewProjectDetails({ name: '', description: '' });
+        setShowAddModal(false);
+        
+        // Refresh the projects list
+        fetchProjects();
+      } else {
+        const errorData = await response.json();
+        toast.error(`Error: ${errorData.message || "Failed to create project"}`);
+      }
+    } catch (error) {
+      toast.error("Failed to create project");
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowAddModal(false);
+    setNewProjectDetails({ name: '', description: '' });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewProjectDetails(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -71,7 +141,7 @@ function AllProjects() {
           </button>
 
           <button
-            onClick={() => navigate("/createProject")}
+            onClick={() => setShowAddModal(true)}
             className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
           >
             <span className="text-xl">+</span>
@@ -95,6 +165,68 @@ function AllProjects() {
           )}
         </div>
       </div>
+
+      {/* Create New Project Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Create New Project</h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Project Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={newProjectDetails.name}
+                onChange={handleInputChange}
+                onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleCreateProject()}
+                placeholder="Enter project name..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={newProjectDetails.description}
+                onChange={handleInputChange}
+                placeholder="Enter project description..."
+                rows="4"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800 resize-none"
+              />
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={handleCreateProject}
+                disabled={!newProjectDetails.name.trim() || !newProjectDetails.description.trim() || creating}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-2 px-4 rounded-lg font-medium transition-colors duration-200"
+              >
+                {creating ? "Creating..." : "Create Project"}
+              </button>
+              <button
+                onClick={closeModal}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors duration-200"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </HomeLayout>
   )
 }
