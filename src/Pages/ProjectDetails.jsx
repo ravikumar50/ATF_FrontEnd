@@ -76,8 +76,8 @@ import SearchBar from "../Search/SearchBar";
     });
 
     try {
-     // const url = "https://functionapptry.azurewebsites.net/api/uploadBlob";
-       const url = "http://localhost:7071/api/uploadBlob"; // Use your local URL for testing
+      const url = "https://functionapptry.azurewebsites.net/api/uploadBlob";
+      // const url = "http://localhost:7071/api/uploadBlob"; // Use your local URL for testing
       await fetch(url, {
         method: "POST",
         body: formData,
