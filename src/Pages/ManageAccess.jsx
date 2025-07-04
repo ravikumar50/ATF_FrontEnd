@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
 import PersonCard from "../Components/PersonCard";
 import { toast } from "react-toastify";
+import { Plus } from "lucide-react";
 
 function ManageAccess() {
   const [people, setPeople] = useState([]);
@@ -183,8 +184,9 @@ function ManageAccess() {
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-1"
           >
+            <Plus className="w-4 h-4" />
             Add New User
           </button>
         </div>
