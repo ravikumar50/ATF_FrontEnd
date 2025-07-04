@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import HomeLayout from "../Layouts/Homelayout";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from "react-router-dom"; // ✅ import location
+import { useLocation, useNavigate } from "react-router-dom"; // ✅ import location
 import ProjectList from "./ProjectList";
 import SearchBar from "../Search/SearchBar";
-import { RefreshCcw } from "lucide-react";
+import { BarChart2, RefreshCcw, UploadCloud } from "lucide-react";
 
 
   function ProjectDetails() {
@@ -14,6 +14,7 @@ import { RefreshCcw } from "lucide-react";
     const [loading, setLoading] = useState(false);
     const location = useLocation(); // ✅ Get the route state
     const projectName = location.state?.name;
+    const navigate = useNavigate();
 
     const fetchFiles = async () => {
     setLoading(true);
@@ -67,7 +68,7 @@ import { RefreshCcw } from "lucide-react";
   async function handleFileUpload(file) {
     const formData = new FormData();
     formData.append('file', file);
-    console.log(projectName);
+    
     
     formData.append('containerName', projectName);
 
@@ -126,15 +127,16 @@ import { RefreshCcw } from "lucide-react";
             <SearchBar updateSearchTerm={setSearchTerm} />   
             <button
               onClick={fetchFiles}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded text-sm h-10 w-50 flex items-center justify-center gap-2"
-              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded text-sm h-10 w-auto flex items-center justify-center gap-2"
+              disabled={loading} title="Refresh"
             >
               <RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
-              {loading ? "Refreshing.." : "Refresh"}
+              
             </button>
 
-            <label className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 rounded text-sm h-10 w-40 cursor-pointer text-center">
-              Upload File
+            <label className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-3 rounded text-sm h-10 w-auto cursor-pointer flex items-center justify-center gap-2" title="Upload File">
+              <UploadCloud size={16} />
+
               <input
                 type="file"
                 className="hidden"
@@ -147,6 +149,35 @@ import { RefreshCcw } from "lucide-react";
                 }}
               />
             </label>
+
+            <button
+                  onClick={() => {
+                    toast.promise(
+                      new Promise((resolve) => {
+                        navigate("/individualDashboard", {
+                          state: {
+                            fileName: "Overall",
+                            containerName: projectName,
+                          },
+                        });
+                        resolve();
+                      }),
+                      {
+                        
+                        
+                        pending: "Loading dashboard...",
+                        success: "Dashboard loaded successfully",
+                        error: error => `Error: ${error.message}`,
+                      },
+                      { position: "top-right", autoClose: 2000 }
+                    );
+                  }}
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded text-sm font-semibold flex items-center gap-1 w-auto h-10"
+                  title="View Dashboard"
+                >
+                  <BarChart2 size={16} />
+                  Dashboard
+                </button>
 
           </div>
           <ProjectList
