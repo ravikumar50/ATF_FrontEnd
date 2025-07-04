@@ -3,7 +3,6 @@ import './App.css';
 import HomePage from './Pages/HomePage';
 import Contact from './Pages/Contact';
 import Logout from './Pages/Logout';
-import Upload from './Pages/Upload';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import OverallDashboard from './Pages/OverallDashboard';
 import About from './Pages/About';
@@ -11,14 +10,13 @@ import About from './Pages/About';
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
 import AuthSync from './Components/Auth/AuthSync';
-import ProjectCard from './Components/ProjectCard';
 import AllProjects from './Pages/AllProjects';
 import ProjectDetails from './Pages/ProjectDetails';
-import CreateProject from './Pages/CreateProject';
-import ManageAcess from './Pages/ManageAccess';
-import UserAccessDetails from './Components/PersonCard';
 import ManageAccess from './Pages/ManageAccess';
 import { ToastContainer } from 'react-toastify';
+import Denied from './Pages/Denied';
+import AdminRoute from './Components/Auth/AdminRoute';
+import NotFound from './Pages/NotFound';
 
 
 function App() {
@@ -36,15 +34,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/upload"
-          element={
-             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <Upload />
-             </MsalAuthenticationTemplate>
-          }
-        />
-
+      
         <Route
           path="/individualDashBoard"
           element={
@@ -110,25 +100,30 @@ function App() {
           }
         />
 
-        <Route
-          path="/createProject"
-          element={
-             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <CreateProject />
-             </MsalAuthenticationTemplate>
-          }
-        />
+        
 
         <Route
           path="/access"
           element={
              <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <ManageAccess />
+              <AdminRoute>
+                <ManageAccess />
+              </AdminRoute>
+              
              </MsalAuthenticationTemplate>
           }
         />
 
-        
+        <Route
+          path="/denied"
+          element={
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <Denied />
+             </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route path="*" element={<NotFound/>}/>
 
 
       </Routes>

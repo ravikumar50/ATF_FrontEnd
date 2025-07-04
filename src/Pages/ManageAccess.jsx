@@ -18,7 +18,7 @@ function ManageAccess() {
       }
     });
     const data = await res.json();
-    console.log(data);
+    
 
     const structuredPeople = Object.entries(data)
       .filter(([_, projects]) => projects[0] !== "Admin")
