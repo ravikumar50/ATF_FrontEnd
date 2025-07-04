@@ -13,7 +13,7 @@ ChartJs.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 function OverallDashboard() {
   
-//   const location = useLocation();
+   const location = useLocation();
  
   const navigate = useNavigate();
   const [chartName, setChartName] = useState("Pie");
@@ -39,6 +39,7 @@ function OverallDashboard() {
 
   
   const fileName = "Overall";
+  const containerName = location.state?.containerName;
 
 
   
@@ -46,33 +47,32 @@ function OverallDashboard() {
 
 
   useEffect(() => {
-    // if (!fileName) {
-    //   toast.error("No file provided.");
-    //   setTimeout(() => {
-    //     navigate("/");
-    //   }, 1500);
-    //   return;
-    // }
+    if (!fileName) {
+      toast.error("No file provided.");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+      return;
+    }
 
     async function fetchParsedCounts() {
       const loadingToastId = toast.loading("Loading Dashboard...");
       try {
-        // const res = await fetch(`https://functionapptry.azurewebsites.net/api/individualCall?fileName=${fileName}`);
-                // const fileName = 'sampleTRXFile.txt';
-                const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
+                const formData = new FormData();
+                formData.append('fileName', fileName);
+                formData.append('containerName', containerName);
+               // const url = 'http://localhost:7071/api/individualCall';
+                 const url = 'https://functionapptry.azurewebsites.net/api/individualCall';
                 
-                // const url = 'http://localhost:7071/api/individualCall';
-                 const res = await fetch(url, {
+                const res = await fetch(url, {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ fileName: fileName }),
+                body: formData,
               });
         if (!res.ok) {
           throw new Error("Failed to parse TRX");
         }
         const parsedCounts = await res.json();
+        
         setTestCounts(parsedCounts);
         toast.dismiss(loadingToastId);  // Dismiss loading toast
         toast.success("Dashboard loaded!" ,{autoClose : 1000});

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Download, Trash2 } from "lucide-react";
+
 
 function ProjectList({ files, loading, fetchFiles, projectName }) {
   const navigate = useNavigate();
@@ -66,10 +68,12 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                  className="bg-slate-600 hover:bg-slate-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
+                  title="Download"
                 >
-                  Download
+                  <Download size={16} />
                 </a>
+
                 <button
                   onClick={() => {
                     toast.promise(
@@ -96,10 +100,12 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                 </button>
                 <button
                   onClick={() => deleteFile(file.name, projectName)}
-                  className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                  className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
+                  title="Delete"
                 >
-                  Delete
+                  <Trash2 size={16} />
                 </button>
+
               </div>
             </li>
           ))

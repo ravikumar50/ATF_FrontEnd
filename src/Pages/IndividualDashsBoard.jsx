@@ -75,8 +75,6 @@ function IndividualDashBoard() {
           throw new Error("Failed to parse TRX");
         }
         const parsedCounts = await res.json();
-        console.log(res)
-        console.log(parsedCounts)
         setTestCounts(parsedCounts);
         toast.dismiss(loadingToastId);  // Dismiss loading toast
         toast.success("Dashboard loaded!" ,{autoClose : 1000});

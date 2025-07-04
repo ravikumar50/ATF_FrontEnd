@@ -9,7 +9,6 @@ import About from './Pages/About';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
-import AuthSync from './Components/Auth/AuthSync';
 import AllProjects from './Pages/AllProjects';
 import ProjectDetails from './Pages/ProjectDetails';
 import ManageAccess from './Pages/ManageAccess';
@@ -22,7 +21,7 @@ import NotFound from './Pages/NotFound';
 function App() {
   return (
     <>
-      <AuthSync /> 
+      
 
       <Routes>
         <Route
