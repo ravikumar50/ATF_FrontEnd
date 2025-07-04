@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from "react-router-dom"; // ✅ import location
 import ProjectList from "./ProjectList";
 import SearchBar from "../Search/SearchBar";
+import { RefreshCcw } from "lucide-react";
+
 
   function ProjectDetails() {
     const [files, setFiles] = useState([]);
@@ -118,18 +120,20 @@ import SearchBar from "../Search/SearchBar";
     <HomeLayout>
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col justify-center gap-4 rounded-lg p-6 text-white w-full max-w-xl bg-white shadow-2xl hover:shadow-gray-400 transition-shadow duration-300 cursor-pointer">
-          <h2 className="text-2xl flex items-center justify-center font-bold text-gray-800">Available Files</h2>
+          <h2 className="text-2xl flex items-center justify-center font-bold text-gray-800">{projectName}</h2>
           <div className="flex justify-between items-center w-full gap-2">
             
             <SearchBar updateSearchTerm={setSearchTerm} />   
             <button
               onClick={fetchFiles}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-2 rounded text-sm h-10 w-40"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded text-sm h-10 w-50 flex items-center justify-center gap-2"
               disabled={loading}
             >
-              {loading ? "Refreshing..." : "Refresh"}
+              <RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
+              {loading ? "Refreshing.." : "Refresh"}
             </button>
-            <label className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded text-sm h-10 w-40 cursor-pointer text-center">
+
+            <label className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 rounded text-sm h-10 w-40 cursor-pointer text-center">
               Upload File
               <input
                 type="file"

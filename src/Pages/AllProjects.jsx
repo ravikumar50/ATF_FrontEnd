@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useMsal, useAccount } from "@azure/msal-react";
 import SearchBar from "../Search/SearchBar";
-import { X } from "lucide-react"; // Make sure to install lucide-react if not already installed
+import { RefreshCcw, X } from "lucide-react"; // Make sure to install lucide-react if not already installed
 
 function AllProjects() {
   const navigate = useNavigate();
@@ -134,10 +134,11 @@ function AllProjects() {
 
           <button
             onClick={fetchProjects}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-md h-10 w-34"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-md h-10 w-34 flex items-center justify-center gap-2"
             disabled={loading}
           >
-            {loading ? "Refreshing..." : "Refresh"}
+            <RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
+            {loading ? "Refreshing.." : "Refresh"}
           </button>
 
           <button
