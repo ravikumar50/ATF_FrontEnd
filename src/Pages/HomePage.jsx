@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HomeLayout from "../Layouts/Homelayout";
+import HomeLayout from "../Layouts/HomeLayout";
 import { useMsal, useAccount } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 
