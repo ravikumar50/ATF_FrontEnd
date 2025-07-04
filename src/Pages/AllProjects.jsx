@@ -1,17 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import projectInfo from "../assets/ProjectDetails/ProjectInfo";
 import HomeLayout from "../Layouts/Homelayout";
 import ProjectCard from "../Components/ProjectCard";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useMsal, useAccount } from "@azure/msal-react";
 import SearchBar from "../Search/SearchBar";
-import { RefreshCcw, X } from "lucide-react"; // Make sure to install lucide-react if not already installed
+import { RefreshCcw, X, Info } from "lucide-react";
 
 function AllProjects() {
   const navigate = useNavigate();
   const location = useLocation();
-  const isAdmin = location.state?.isAdmin || false; 
+  const isAdmin = location.state?.isAdmin || false;
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -22,25 +21,24 @@ function AllProjects() {
   });
   const [creating, setCreating] = useState(false);
   const { accounts } = useMsal();
-  const email = useAccount(accounts[0] || {}).username; 
+  const email = useAccount(accounts[0] || {})?.username;
 
   const fetchProjects = async () => {
     setLoading(true);
 
-    try{
+    try {
       const formData = new FormData();
-      formData.append('email',email);
+      formData.append('email', email);
       const url = "https://functionapptry.azurewebsites.net/api/listProjects";
-      //const url = "http://localhost:7071/api/listProjects";
       const response = await fetch(url, {
-          method: "POST",
-          body: formData
+        method: "POST",
+        body: formData
       });
 
       const data = await response.json();
       setProjects(data);
 
-    }catch (error) {
+    } catch (error) {
       toast.error("Failed to load Projects", {
         position: "top-right",
         autoClose: 2000,
@@ -52,9 +50,20 @@ function AllProjects() {
   }
 
   const handleCreateProject = async () => {
-    if (!newProjectDetails.name || newProjectDetails.name.trim() === "" || 
-        !newProjectDetails.description || newProjectDetails.description.trim() === "") {
+    const { name, description } = newProjectDetails;
+
+    if (!name.trim() || !description.trim()) {
       toast.error("Please fill all the fields");
+      return;
+    }
+
+    if (/\s/.test(name)) {
+      toast.error("Project name must not contain spaces");
+      return;
+    }
+
+    if (/[A-Z]/.test(name)) {
+      toast.error("Project name must be all lowercase");
       return;
     }
 
@@ -62,8 +71,8 @@ function AllProjects() {
 
     try {
       const formData = new FormData();
-      formData.append('name', newProjectDetails.name);
-      formData.append('description', newProjectDetails.description);
+      formData.append('name', name);
+      formData.append('description', description);
 
       toast.loading("Creating Project...", {
         position: "top-right",
@@ -83,12 +92,9 @@ function AllProjects() {
           autoClose: 2000,
           theme: "dark",
         });
-        
-        // Reset form and close modal
+
         setNewProjectDetails({ name: '', description: '' });
         setShowAddModal(false);
-        
-        // Refresh the projects list
         fetchProjects();
       } else {
         const errorData = await response.json();
@@ -122,13 +128,13 @@ function AllProjects() {
     ? projects.filter(project => project.name.toLowerCase().includes(searchTerm.toLowerCase()))
     : projects;
 
-  return(
+  return (
     <HomeLayout>
       <div className="flex flex-col items-center justify-center min-h-screen mt-5 mb-5 gap-3">
         <div>
           <h1 className="text-3xl text-gray-800 font-bold mb-6">All Projects</h1>
         </div>
-        
+
         <div className="flex items-center justify-start w-[100%] max-w-6xl px-4 mb-6 gap-4">
           <div className="flex-grow">
             <SearchBar updateSearchTerm={setSearchTerm} placeholder={"Search Projects"} />
@@ -144,15 +150,14 @@ function AllProjects() {
           </button>
 
           {isAdmin && (
-  <button
-    onClick={() => setShowAddModal(true)}
-    className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
-  >
-    <span className="text-xl">+</span>
-    <span>New project</span>
-  </button>
-)}
-
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
+            >
+              <span className="text-xl">+</span>
+              <span>New project</span>
+            </button>
+          )}
         </div>
 
         <div className="min-h-[460px] flex justify-center w-full px-4">
@@ -161,9 +166,9 @@ function AllProjects() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full">
               {filteredProject.map((project, index) => (
-                <ProjectCard 
-                  name={project.name} 
-                  description={project.description} 
+                <ProjectCard
+                  name={project.name}
+                  description={project.description}
                   key={index}
                 />
               ))}
@@ -187,14 +192,24 @@ function AllProjects() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                 Project Name
+                <div className="relative group">
+                  <Info className="w-4 h-4 text-gray-800 cursor-pointer" />
+                  <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                    Must be lowercase and contain no spaces
+                  </div>
+                </div>
+
               </label>
               <input
                 type="text"
                 name="name"
                 value={newProjectDetails.name}
                 onChange={handleInputChange}
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/\s/g, "").toLowerCase();
+                }}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleCreateProject()}
                 placeholder="Enter project name..."
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
@@ -234,7 +249,7 @@ function AllProjects() {
         </div>
       )}
     </HomeLayout>
-  )
+  );
 }
 
 export default AllProjects;
