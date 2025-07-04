@@ -103,7 +103,7 @@ function IndividualDashBoard() {
 
   return (
     <>
-    <HomeLayout>
+  
       <div className="flex items-center justify-center">
         <div className="pt-3 flex flex-col items-center gap-3 text-white px-4">
           <div className="flex items-center justify-center gap-3">
@@ -133,7 +133,7 @@ function IndividualDashBoard() {
         </div>  
         
       </div>
-    </HomeLayout>
+    
     <ToastContainer position="top-center" theme="dark" />
     </>
   );

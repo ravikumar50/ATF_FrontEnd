@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Download, Trash2 } from "lucide-react";
+import { Download, Trash2, BarChart2 } from "lucide-react";
+
 
 
 function ProjectList({ files, loading, fetchFiles, projectName }) {
@@ -73,7 +74,6 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                 >
                   <Download size={16} />
                 </a>
-
                 <button
                   onClick={() => {
                     toast.promise(
@@ -94,10 +94,13 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                       { position: "top-right", autoClose: 2000 }
                     );
                   }}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm font-semibold"
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center gap-1"
+                  title="View Dashboard"
                 >
-                  Dashboard
+                  <BarChart2 size={16} />
+
                 </button>
+
                 <button
                   onClick={() => deleteFile(file.name, projectName)}
                   className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
