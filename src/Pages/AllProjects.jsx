@@ -10,6 +10,8 @@ import { RefreshCcw, X } from "lucide-react"; // Make sure to install lucide-rea
 
 function AllProjects() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdmin = location.state?.isAdmin || false; 
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -141,13 +143,16 @@ function AllProjects() {
             {loading ? "Refreshing.." : "Refresh"}
           </button>
 
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
-          >
-            <span className="text-xl">+</span>
-            <span>New project</span>
-          </button>
+          {isAdmin && (
+  <button
+    onClick={() => setShowAddModal(true)}
+    className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
+  >
+    <span className="text-xl">+</span>
+    <span>New project</span>
+  </button>
+)}
+
         </div>
 
         <div className="min-h-[460px] flex justify-center w-full px-4">

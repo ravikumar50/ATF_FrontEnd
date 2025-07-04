@@ -39,7 +39,7 @@ function HomePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
            
-            <Link to="/allProjects">
+            <Link to="/allProjects" state={{isAdmin}}>
               <button className="bg-blue-500 text-lg text-white hover:bg-blue-600 px-4 py-3 rounded-md font-medium transition-all">
                 View Projects
               </button>
