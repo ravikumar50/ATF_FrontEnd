@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import HomeLayout from "../Layouts/Homelayout";
 import { useMsal, useAccount } from "@azure/msal-react";
 import { useEffect, useState } from "react";
+import { all } from "axios";
 
 function HomePage() {
 
@@ -10,6 +11,7 @@ function HomePage() {
   const formData = new FormData();
   formData.append('email', email);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [allProjects, setAllProjects] = useState([]);
 
   const fetchAdminStatus = async () => {
 
@@ -20,9 +22,24 @@ function HomePage() {
     if((await res).status === 200)  setIsAdmin(true);
   }
 
+  const fetchAllProjects = async () => {
+    const url = "https://functionapptry.azurewebsites.net/api/listProjects";
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    setAllProjects(data);
+  }
+
   useEffect(() => {
     fetchAdminStatus();
+    fetchAllProjects();
   }, []);
+
+  console.log(allProjects);
+  
 
   return (
     <HomeLayout>
@@ -45,7 +62,7 @@ function HomePage() {
               </button>
             </Link>
 
-            {isAdmin && <Link to="/access">
+            {isAdmin && <Link to="/access" state={{allProjects}}>
               <button className="bg-blue-500 text-lg text-white hover:bg-blue-600 px-4 py-3 rounded-md font-medium transition-all">
                 Manage Access
               </button>
