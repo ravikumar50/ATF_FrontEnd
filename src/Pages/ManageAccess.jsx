@@ -3,12 +3,15 @@ import HomeLayout from "../Layouts/Homelayout";
 import PersonCard from "../Components/PersonCard";
 import { toast } from "react-toastify";
 import { Plus } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 function ManageAccess() {
   const [people, setPeople] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUserEmail, setNewUserEmail] = useState('');
   const [newUserRole, setNewUserRole] = useState('User');
+  const location = useLocation();
+  const allProjects = location.state?.allProjects || [];
 
   const fetchAccessDetails = async () => {
     const url = "https://functionapptry.azurewebsites.net/api/accessDetails";
@@ -198,6 +201,7 @@ function ManageAccess() {
               person={person}
               onAddProject={handleAddProject}
               onRemoveProject={handleRemoveProject}
+              allProjects={allProjects}
             />
           ))}
         </div>

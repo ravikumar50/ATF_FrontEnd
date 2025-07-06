@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 
-const PersonCard = ({ person, onAddProject, onRemoveProject }) => {
+const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
+
+  const assignedProjectNames = new Set(person.projects.map(p => p.name));
+  const unassignedProjects = allProjects.filter(p => !assignedProjectNames.has(p.name));
+  console.log('unassignedProjects:', unassignedProjects);
+  console.log('assignedProjectNames:', assignedProjectNames);
+  
 
   const handleAddProject = () => {
     if (newProjectName.trim()) {
@@ -99,14 +105,22 @@ const PersonCard = ({ person, onAddProject, onRemoveProject }) => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Project Name
               </label>
-              <input
-                type="text"
+              <select
                 value={newProjectName}
                 onChange={(e) => setNewProjectName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleAddProject()}
-                placeholder="Enter project name..."
+                disabled={unassignedProjects.length === 0}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
-              />
+              >
+                <option value="">Select a project...</option>
+                {unassignedProjects.map((proj) => (
+                  <option key={proj.id || proj.name} value={proj.name}>
+                    {proj.name}
+                  </option>
+                ))}
+              </select>
+              {unassignedProjects.length === 0 && (
+                <p className="text-sm text-red-500 mt-2">All projects are already assigned.</p>
+              )}
             </div>
 
             <div className="flex space-x-3">
