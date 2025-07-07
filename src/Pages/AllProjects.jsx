@@ -192,7 +192,7 @@ function AllProjects() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                 Project Name
                 <div className="relative group">
                   <Info className="w-4 h-4 text-gray-800 cursor-pointer" />

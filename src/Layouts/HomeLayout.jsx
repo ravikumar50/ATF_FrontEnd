@@ -1,8 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useIsAuthenticated } from "@azure/msal-react";
-import Footer from "../Components/Footer";
-import { ToastContainer } from "react-toastify";
 
 function HomeLayout({ children }) {
   const isAuthenticated = useIsAuthenticated();
