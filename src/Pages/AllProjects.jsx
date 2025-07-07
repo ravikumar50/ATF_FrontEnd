@@ -25,7 +25,6 @@ function AllProjects() {
 
   const fetchProjects = async () => {
     setLoading(true);
-
     try {
       const formData = new FormData();
       formData.append('email', email);
@@ -34,10 +33,8 @@ function AllProjects() {
         method: "POST",
         body: formData
       });
-
       const data = await response.json();
       setProjects(data);
-
     } catch (error) {
       toast.error("Failed to load Projects", {
         position: "top-right",
@@ -47,7 +44,7 @@ function AllProjects() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleCreateProject = async () => {
     const { name, description } = newProjectDetails;
@@ -57,18 +54,14 @@ function AllProjects() {
       return;
     }
 
-    if (/\s/.test(name)) {
-      toast.error("Project name must not contain spaces");
-      return;
-    }
+    
 
-    if (/[A-Z]/.test(name)) {
-      toast.error("Project name must be all lowercase");
+    if (!/^[a-z0-9]([a-z0-9-]{1,61}[a-z0-9])?$/.test(name)) {
+      toast.error("Invalid project name. Use 3–63 chars, lowercase letters, numbers, and dashes only. No leading/trailing dash.");
       return;
     }
 
     setCreating(true);
-
     try {
       const formData = new FormData();
       formData.append('name', name);
@@ -92,7 +85,6 @@ function AllProjects() {
           autoClose: 2000,
           theme: "dark",
         });
-
         setNewProjectDetails({ name: '', description: '' });
         setShowAddModal(false);
         fetchProjects();
@@ -114,11 +106,22 @@ function AllProjects() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Only apply sanitization on project name field
+    let sanitizedValue = value;
+    if (name === "name") {
+      sanitizedValue = value
+        .toLowerCase()               // Convert to lowercase
+        .replace(/[^a-z0-9-]/g, '')  // Allow only lowercase letters, numbers, and dashes
+    }
+
     setNewProjectDetails(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
+
+
 
   useEffect(() => {
     fetchProjects();
@@ -151,7 +154,10 @@ function AllProjects() {
 
           {isAdmin && (
             <button
-              onClick={() => setShowAddModal(true)}
+              onClick={() => {
+                setNewProjectDetails({ name: '', description: '' });
+                setShowAddModal(true);
+              }}
               className="h-10 flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded whitespace-nowrap"
             >
               <span className="text-xl">+</span>
@@ -177,7 +183,6 @@ function AllProjects() {
         </div>
       </div>
 
-      {/* Create New Project Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl p-6 w-full max-w-md">
@@ -197,19 +202,16 @@ function AllProjects() {
                 <div className="relative group">
                   <Info className="w-4 h-4 text-gray-800 cursor-pointer" />
                   <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                    Must be lowercase and contain no spaces
+                    Lowercase, numbers, dashes only. 3–63 chars.
                   </div>
                 </div>
-
               </label>
               <input
                 type="text"
                 name="name"
                 value={newProjectDetails.name}
                 onChange={handleInputChange}
-                onInput={(e) => {
-                  e.target.value = e.target.value.replace(/\s/g, "").toLowerCase();
-                }}
+                
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleCreateProject()}
                 placeholder="Enter project name..."
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
