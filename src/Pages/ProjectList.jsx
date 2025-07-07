@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Download, Trash2, BarChart2 } from "lucide-react";
+import { Download, Trash2, BarChart2,Eye } from "lucide-react";
 
 
 
@@ -48,6 +48,19 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
       });
     }
   }
+
+  async function viewHTML(fileName, containerName) {
+    const htmlFileName = fileName.replace(/\.[^/.]+$/, ".html"); // replaces last extension with .html
+
+    navigate("/viewHtml", {
+      state: {
+        fileName: htmlFileName,
+        containerName
+      }
+    });
+  }
+
+  
 
   return (
     <>
@@ -108,6 +121,15 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                 >
                   <Trash2 size={16} />
                 </button>
+
+                <button
+                  onClick={() => viewHTML(file.name, projectName)}
+                  className="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
+                  title="View HTML"
+                >
+                  <Eye size={16} />
+                </button>
+
 
               </div>
             </li>

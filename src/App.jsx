@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage';
-import Contact from './Pages/Contact';
 import Logout from './Pages/Logout';
 import IndividualDashBoard from './Pages/IndividualDashsBoard';
 import OverallDashboard from './Pages/OverallDashboard';
-import About from './Pages/About';
 
 import { MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
@@ -16,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import Denied from './Pages/Denied';
 import AdminRoute from './Components/Auth/AdminRoute';
 import NotFound from './Pages/NotFound';
+import ViewHtmlPage from './Pages/ViewHTMLPage';
 
 
 function App() {
@@ -52,23 +51,9 @@ function App() {
           }
         />
 
-        <Route
-          path="/contact"
-          element={
-             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <Contact />
-             </MsalAuthenticationTemplate>
-          }
-        />
+        
 
-        <Route
-          path="/about"
-          element={
-             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-              <About />
-             </MsalAuthenticationTemplate>
-          }
-        />
+        
 
         <Route
           path="/logout"
@@ -118,6 +103,15 @@ function App() {
           element={
              <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
               <Denied />
+             </MsalAuthenticationTemplate>
+          }
+        />
+
+        <Route
+          path="/viewHtml"
+          element={
+             <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+              <ViewHtmlPage />
              </MsalAuthenticationTemplate>
           }
         />
