@@ -87,6 +87,14 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
                 >
                   <Download size={16} />
                 </a>
+
+                <button
+                  onClick={() => deleteFile(file.name, projectName)}
+                  className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
+                  title="Delete"
+                >
+                  <Trash2 size={16} />
+                </button>
                 <button
                   onClick={() => {
                     toast.promise(
@@ -114,13 +122,7 @@ function ProjectList({ files, loading, fetchFiles, projectName }) {
 
                 </button>
 
-                <button
-                  onClick={() => deleteFile(file.name, projectName)}
-                  className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold flex items-center justify-center"
-                  title="Delete"
-                >
-                  <Trash2 size={16} />
-                </button>
+                
 
                 <button
                   onClick={() => viewHTML(file.name, projectName)}
