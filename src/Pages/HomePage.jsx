@@ -38,7 +38,7 @@ function HomePage() {
     fetchAllProjects();
   }, []);
 
-  console.log(allProjects);
+  
   
 
   return (
