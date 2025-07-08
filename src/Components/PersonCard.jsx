@@ -7,8 +7,7 @@ const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
 
   const assignedProjectNames = new Set(person.projects.map(p => p.name));
   const unassignedProjects = allProjects.filter(p => !assignedProjectNames.has(p.name));
-  console.log('unassignedProjects:', unassignedProjects);
-  console.log('assignedProjectNames:', assignedProjectNames);
+  
   
 
   const handleAddProject = () => {
