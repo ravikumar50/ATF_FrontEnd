@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATF Architecture Diagram</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+        }
+        
+        .diagram-container {
+            width: 100%;
+            height: 700px;
+            position: relative;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .component {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 12px;
+            background: white;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .component:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* User */
+        .user {
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 60px;
+            background: #e1f5fe;
+            border-color: #0277bd;
+            color: #0277bd;
+        }
+        
+        /* Frontend */
+        .frontend {
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 70px;
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+            color: #7b1fa2;
+        }
+        
+        /* App Service */
+        .app-service {
+            top: 140px;
+            left: 60px;
+            width: 120px;
+            height: 60px;
+            background: #e8f5e8;
+            border-color: #2e7d32;
+            color: #2e7d32;
+        }
+        
+        /* Azure AD */
+        .azure-ad {
+            top: 140px;
+            right: 60px;
+            width: 100px;
+            height: 60px;
+            background: #e3f2fd;
+            border-color: #1976d2;
+            color: #1976d2;
+        }
+        
+        /* Function App */
+        .function-app {
+            top: 280px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 70px;
+            background: #fff3e0;
+            border-color: #ef6c00;
+            color: #ef6c00;
+        }
+        
+        /* Functions Container */
+        .functions-container {
+            top: 280px;
+            left: 60px;
+            width: 180px;
+            height: 180px;
+            background: #fafafa;
+            border-color: #666;
+            border-style: dashed;
+            color: #666;
+            font-size: 10px;
+        }
+        
+        .function-item {
+            width: 90%;
+            height: 20px;
+            background: #fff3e0;
+            border: 1px solid #ef6c00;
+            border-radius: 4px;
+            margin: 3px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #ef6c00;
+            font-weight: normal;
+        }
+        
+        /* Graph API */
+        .graph-api {
+            top: 280px;
+            right: 60px;
+            width: 110px;
+            height: 60px;
+            background: #fff3e0;
+            border-color: #f57c00;
+            color: #f57c00;
+        }
+        
+        /* Event Grid */
+        .event-grid {
+            top: 380px;
+            right: 60px;
+            width: 100px;
+            height: 60px;
+            background: #fce4ec;
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+        
+        /* Blob Storage */
+        .blob-storage {
+            top: 520px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 70px;
+            background: #e8f5e8;
+            border-color: #388e3c;
+            color: #388e3c;
+        }
+        
+        /* Containers */
+        .containers {
+            top: 520px;
+            left: 60px;
+            width: 160px;
+            height: 120px;
+            background: #fafafa;
+            border-color: #666;
+            border-style: dashed;
+            color: #666;
+            font-size: 10px;
+        }
+        
+        .container-item {
+            width: 90%;
+            height: 18px;
+            background: #e8f5e8;
+            border: 1px solid #388e3c;
+            border-radius: 4px;
+            margin: 2px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #388e3c;
+            font-weight: normal;
+        }
+        
+        /* JSON Metadata */
+        .json-metadata {
+            top: 520px;
+            right: 60px;
+            width: 120px;
+            height: 80px;
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+            color: #7b1fa2;
+        }
+        
+        /* Connection Lines */
+        .connection {
+            position: absolute;
+            background: #333;
+            z-index: 5;
+        }
+        
+        .vertical-line {
+            width: 2px;
+        }
+        
+        .horizontal-line {
+            height: 2px;
+        }
+        
+        /* Arrow heads */
+        .arrow-head {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            z-index: 6;
+        }
+        
+        .arrow-down {
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #333;
+        }
+        
+        .arrow-right {
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #333;
+        }
+        
+        .arrow-left {
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 8px solid #333;
+        }
+        
+        /* Connection Labels */
+        .connection-label {
+            position: absolute;
+            font-size: 10px;
+            color: #666;
+            background: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            z-index: 7;
+        }
+        
+        /* Specific connections */
+        .conn1 { top: 90px; left: 50%; transform: translateX(-50%); height: 50px; }
+        .conn2 { top: 210px; left: 50%; transform: translateX(-50%); height: 70px; }
+        .conn3 { top: 350px; left: 50%; transform: translateX(-50%); height: 170px; }
+        .conn4 { top: 175px; left: 180px; width: 220px; }
+        .conn5 { top: 175px; left: 640px; width: 220px; }
+        .conn6 { top: 315px; left: 240px; width: 380px; }
+        .conn7 { top: 315px; left: 620px; width: 240px; }
+        .conn8 { top: 410px; left: 760px; width: 100px; }
+        .conn9 { top: 560px; left: 220px; width: 260px; }
+        .conn10 { top: 560px; left: 480px; width: 260px; }
+        
+        /* Arrow positions */
+        .arrow1 { top: 135px; left: 50%; transform: translateX(-50%); }
+        .arrow2 { top: 275px; left: 50%; transform: translateX(-50%); }
+        .arrow3 { top: 515px; left: 50%; transform: translateX(-50%); }
+        .arrow4 { top: 170px; left: 395px; }
+        .arrow5 { top: 170px; left: 635px; }
+        .arrow6 { top: 310px; left: 615px; }
+        .arrow7 { top: 310px; left: 855px; }
+        .arrow8 { top: 405px; left: 855px; }
+        .arrow9 { top: 555px; left: 475px; }
+        .arrow10 { top: 555px; left: 735px; }
+        
+        /* Label positions */
+        .label1 { top: 110px; left: 52%; }
+        .label2 { top: 240px; left: 52%; }
+        .label3 { top: 430px; left: 52%; }
+        .label4 { top: 165px; left: 280px; }
+        .label5 { top: 165px; left: 720px; }
+        .label6 { top: 305px; left: 420px; }
+        .label7 { top: 305px; left: 720px; }
+        .label8 { top: 395px; left: 800px; }
+        .label9 { top: 545px; left: 320px; }
+        .label10 { top: 545px; left: 580px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ATF - Automated Test Framework Architecture</h1>
+        
+        <div class="diagram-container">
+            <!-- Components -->
+            <div class="component user">
+                👤<br>User<br>(Admin/User)
+            </div>
+            
+            <div class="component frontend">
+                ⚛️<br>React + Vite<br>Frontend<br><small>Chart.js, Router</small>
+            </div>
+            
+            <div class="component app-service">
+                🌐<br>Azure App Service<br><small>Frontend Hosting</small>
+            </div>
+            
+            <div class="component azure-ad">
+                🔐<br>Azure AD<br><small>Authentication</small>
+            </div>
+            
+            <div class="component function-app">
+                ⚡<br>Azure Function App<br><small>Serverless Backend</small>
+            </div>
+            
+            <div class="component functions-container">
+                <div style="margin-bottom: 8px;">Azure Functions</div>
+                <div class="function-item">newProject</div>
+                <div class="function-item">addUser</div>
+                <div class="function-item">uploadBlob</div>
+                <div class="function-item">parseTRX</div>
+                <div class="function-item">listProjects</div>
+                <div class="function-item">deleteBlob</div>
+                <div class="function-item">selfDestruct</div>
+            </div>
+            
+            <div class="component graph-api">
+                📊<br>Microsoft<br>Graph API<br><small>User Mgmt</small>
+            </div>
+            
+            <div class="component event-grid">
+                🔄<br>Event Grid<br><small>Blob Events</small>
+            </div>
+            
+            <div class="component blob-storage">
+                💾<br>Azure Blob<br>Storage<br><small>File Storage</small>
+            </div>
+            
+            <div class="component containers">
+                <div style="margin-bottom: 8px;">Containers (Projects)</div>
+                <div class="container-item">dummyfiles/</div>
+                <div class="container-item">metadata/</div>
+                <div class="container-item">projectmeta/</div>
+                <div class="container-item">*.trx files</div>
+            </div>
+            
+            <div class="component json-metadata">
+                📄<br>JSON Metadata<br><small>database.json<br>mapping.json</small>
+            </div>
+            
+            <!-- Connections -->
+            <div class="connection vertical-line conn1"></div>
+            <div class="connection vertical-line conn2"></div>
+            <div class="connection vertical-line conn3"></div>
+            <div class="connection horizontal-line conn4"></div>
+            <div class="connection horizontal-line conn5"></div>
+            <div class="connection horizontal-line conn6"></div>
+            <div class="connection horizontal-line conn7"></div>
+            <div class="connection horizontal-line conn8"></div>
+            <div class="connection horizontal-line conn9"></div>
+            <div class="connection horizontal-line conn10"></div>
+            
+            <!-- Arrows -->
+            <div class="arrow-head arrow-down arrow1"></div>
+            <div class="arrow-head arrow-down arrow2"></div>
+            <div class="arrow-head arrow-down arrow3"></div>
+            <div class="arrow-head arrow-right arrow4"></div>
+            <div class="arrow-head arrow-left arrow5"></div>
+            <div class="arrow-head arrow-right arrow6"></div>
+            <div class="arrow-head arrow-left arrow7"></div>
+            <div class="arrow-head arrow-down arrow8"></div>
+            <div class="arrow-head arrow-left arrow9"></div>
+            <div class="arrow-head arrow-right arrow10"></div>
+            
+            <!-- Labels -->
+            <div class="connection-label label1">HTTP Requests</div>
+            <div class="connection-label label2">API Calls</div>
+            <div class="connection-label label3">Data Storage</div>
+            <div class="connection-label label4">Auth</div>
+            <div class="connection-label label5">Auth</div>
+            <div class="connection-label label6">User Mgmt</div>
+            <div class="connection-label label7">User Mgmt</div>
+            <div class="connection-label label8">Events</div>
+            <div class="connection-label label9">Metadata</div>
+            <div class="connection-label label10">Metadata</div>
+        </div>
+    </div>
+</body>
+</html>
