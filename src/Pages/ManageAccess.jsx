@@ -188,34 +188,36 @@ function ManageAccess() {
     <HomeLayout>
       <div className="p-6">
         <h1 className="text-3xl font-bold text-black mb-8 text-center">Manage Access</h1>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-3">
+            <SearchBar updateSearchTerm={setSearchTerm} />
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-blue-500 hover:bg-blue-600 w-40 h-10 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-1"
+            >
+              <Plus className="w-4 h-4" />
+              Add New User
+            </button>
+          </div>
 
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-3">
-          <SearchBar updateSearchTerm={setSearchTerm} />
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-blue-500 hover:bg-blue-600 w-40 h-10 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-1"
-          >
-            <Plus className="w-4 h-4" />
-            Add New User
-          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPeople.length === 0 ? (
+              <div className="col-span-full text-center text-2xl text-gray-800 font-bold">No users found.</div>
+            ) : (
+              filteredPeople.map(person => (
+                <div key={person.id} className="self-start">
+                  <PersonCard
+                    person={person}
+                    onAddProject={handleAddProject}
+                    onRemoveProject={handleRemoveProject}
+                    allProjects={allProjects}
+                  />
+                </div>
+              ))
+            )}
+          </div>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPeople.length === 0 ? (
-            <div className="col-span-full text-center text-2xl text-gray-800 font-bold">No users found.</div>
-          ) : (
-            filteredPeople.map(person => (
-              <div key={person.id} className="self-start">
-                <PersonCard
-                  person={person}
-                  onAddProject={handleAddProject}
-                  onRemoveProject={handleRemoveProject}
-                  allProjects={allProjects}
-                />
-              </div>
-            ))
-          )}
-        </div>
+        
 
         {/* Modal */}
         {isModalOpen && (

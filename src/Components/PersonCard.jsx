@@ -28,7 +28,7 @@ const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
     <>
       <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden max-w-md h-auto flex flex-col">
         {/* Person Header */}
-        <div className="p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white flex-shrink-0">
+        <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white flex-shrink-0">
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center font-bold text-lg">
               {person.name?.charAt(0).toUpperCase()}
