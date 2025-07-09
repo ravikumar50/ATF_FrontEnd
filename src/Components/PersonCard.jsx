@@ -4,6 +4,7 @@ import { Plus, X } from 'lucide-react';
 const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
+  
 
   const assignedProjectNames = new Set(person.projects.map(p => p.name));
   const unassignedProjects = allProjects.filter(p => !assignedProjectNames.has(p.name));
@@ -25,7 +26,7 @@ const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden max-w-md h-90 flex flex-col">
+      <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden max-w-md h-auto flex flex-col">
         {/* Person Header */}
         <div className="p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white flex-shrink-0">
           <div className="flex items-center space-x-4">
@@ -34,56 +35,56 @@ const PersonCard = ({ person, onAddProject, onRemoveProject, allProjects }) => {
             </div>
             <div>
               <h3 className="text-lg font-semibold">{person.name}</h3>
-              <p className="text-blue-100">{person.role}</p>
+              <p className="text-blue-100">{person.email}</p>
             </div>
           </div>
         </div>
 
         {/* Projects Section */}
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="px-6 pt-6 pb-4 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                Projects ({person.projects.length})
-              </h4>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-1"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add</span>
-              </button>
-            </div>
+        <div className="px-6 pt-6 pb-4">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Projects ({person.projects.length})
+            </h4>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-1"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add</span>
+            </button>
           </div>
 
-          {/* Projects List */}
-          <div className="flex-1 px-6 pb-6 overflow-y-auto">
-            <div className="space-y-3">
-              {person.projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="p-3 bg-gray-50 rounded-lg flex justify-between items-center"
-                >
-                  <span className="font-medium text-gray-900">
-                    {project.name}
-                  </span>
-                  <button
-                    onClick={() => onRemoveProject(person.id, project.name)}
-                    className="text-red-500 hover:text-red-700 text-sm font-semibold"
+          {/* Project Dropdown */}
+          {person.projects.length > 0 && (
+            <details className="mt-3 bg-gray-50 rounded-lg border border-gray-200">
+              <summary className="cursor-pointer px-4 py-2 text-gray-800 font-medium rounded-t-lg">
+                View Projects
+              </summary>
+              <div className="divide-y divide-gray-200">
+                {person.projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="px-4 py-2 flex justify-between items-center"
                   >
-                    Remove
-                  </button>
-                </div>
-              ))}
-              {person.projects.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                  <Plus className="w-8 h-8 mx-auto mb-2" />
-                  <p>No projects yet. Add one to get started!</p>
-                </div>
-              )}
-            </div>
-          </div>
+                    <span className="text-sm font-medium text-gray-900">{project.name}</span>
+                    <button
+                      onClick={() => onRemoveProject(person.id, project.name)}
+                      className="text-red-500 hover:text-red-700 text-sm font-semibold"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+
+          {person.projects.length === 0 && (
+            <p className="text-sm text-gray-500 mt-3">No projects assigned.</p>
+          )}
         </div>
+
       </div>
 
       {/* Add Project Modal */}
