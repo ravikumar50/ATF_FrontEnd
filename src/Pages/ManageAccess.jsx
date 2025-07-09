@@ -133,14 +133,18 @@ function ManageAccess() {
   const toastId = toast.loading(`Sending invitation to ${newUserEmail}...`);
 
   try {
-    // const url = "http://localhost:7071/api/addUser"; // or production URL
     const url = "https://functionapptry.azurewebsites.net/api/addUser"; 
     const res = await fetch(url, {
       method: "POST",
       body: formData,
     });
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      data = { message: await res.text() }; // fallback to plain text
+    }
 
     if (!res.ok) {
       toast.update(toastId, {
@@ -173,6 +177,7 @@ function ManageAccess() {
     });
   }
 };
+
 
 
   useEffect(() => {
